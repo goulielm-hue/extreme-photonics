@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Editor — Extreme Photonics Labs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --editor-bg: #1a1a2e;
+            --editor-surface: #16213e;
+            --editor-accent: #0f3460;
+            --editor-highlight: #e94560;
+            --editor-text: #eee;
+            --editor-muted: #888;
+            --toolbar-h: 56px;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--editor-bg); color: var(--editor-text); overflow: hidden; height: 100vh; }
+        .toolbar { height: var(--toolbar-h); background: var(--editor-surface); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; padding: 0 24px; gap: 16px; z-index: 1000; position: relative; }
+        .toolbar-brand { font-weight: 600; font-size: 0.95rem; color: var(--editor-highlight); margin-right: 8px; }
+        .toolbar-sep { width: 1px; height: 24px; background: rgba(255,255,255,0.1); }
+        .toolbar-page-select { background: var(--editor-accent); color: var(--editor-text); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 6px 12px; font-size: 0.85rem; font-family: inherit; cursor: pointer; }
+        .toolbar-status { font-size: 0.8rem; color: var(--editor-muted); flex: 1; }
+        .toolbar-status.saving { color: #f0ad4e; }
+        .toolbar-status.saved { color: #5cb85c; }
+        .toolbar-status.error { color: var(--editor-highlight); }
+        .btn { padding: 8px 20px; border-radius: 6px; border: none; font-family: inherit; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .btn-publish { background: var(--editor-highlight); color: white; }
+        .btn-publish:hover { background: #d63851; }
+        .btn-publish:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-view { background: transparent; color: var(--editor-muted); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-view:hover { color: white; border-color: rgba(255,255,255,0.3); }
+        .editor-layout { display: flex; height: calc(100vh - var(--toolbar-h)); }
+        .sidebar { width: 360px; min-width: 360px; background: var(--editor-surface); border-right: 1px solid rgba(255,255,255,0.08); overflow-y: auto; padding: 20px; }
+        .sidebar h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--editor-muted); margin-bottom: 12px; margin-top: 20px; }
+        .sidebar h3:first-child { margin-top: 0; }
+        .field-group { margin-bottom: 16px; }
+        .field-label { font-size: 0.78rem; color: var(--editor-muted); margin-bottom: 4px; display: block; }
+        .field-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 8px 12px; color: var(--editor-text); font-family: inherit; font-size: 0.85rem; transition: border-color 0.2s; }
+        .field-input:focus { outline: none; border-color: var(--editor-highlight); background: rgba(255,255,255,0.08); }
+        textarea.field-input { resize: vertical; min-height: 60px; }
+        .card-editor { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+        .card-editor-title { font-size: 0.8rem; font-weight: 600; color: var(--editor-text); margin-bottom: 8px; }
+        .preview-container { flex: 1; background: #111; position: relative; overflow: hidden; }
+        .preview-container iframe { width: 100%; height: 100%; border: none; }
+        .login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; gap: 20px; }
+        .login-screen h1 { font-size: 1.8rem; font-weight: 300; }
+        .login-screen h1 span { color: var(--editor-highlight); font-weight: 600; }
+        .login-screen p { color: var(--editor-muted); max-width: 400px; text-align: center; line-height: 1.6; }
+        .login-input { width: 400px; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: var(--editor-surface); color: var(--editor-text); font-size: 0.9rem; font-family: inherit; }
+        .login-input:focus { outline: none; border-color: var(--editor-highlight); }
+        .btn-login { padding: 12px 32px; background: var(--editor-highlight); color: white; border: none; border-radius: 8px; font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+        .btn-login:hover { background: #d63851; }
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    </style>
+</head>
+<body>
+<div class="login-screen" id="loginScreen">
+    <h1><span>Extreme Photonics</span> Editor</h1>
+    <p>Enter your GitHub Personal Access Token to edit your website visually. Changes appear in real-time preview on the right. Hit Publish to push to the live site.</p>
+    <input type="password" class="login-input" id="tokenInput" placeholder="ghp_... or github_pat_...">
+    <button class="btn-login" onclick="doLogin()">Open Editor</button>
+    <p style="font-size:0.75rem;color:#555">Need a token? github.com/settings/tokens > New fine-grained token > Contents read+write for extreme-photonics.</p>
+</div>
+<div id="editorApp" style="display:none">
+    <div class="toolbar">
+        <div class="toolbar-brand">EP Editor</div>
+        <div class="toolbar-sep"></div>
+        <select class="toolbar-page-select" id="pageSelect" onchange="switchPage(this.value)">
+            <option value="homepage">Homepage</option>
+            <option value="team">Team & Colleagues</option>
+        </select>
+        <div class="toolbar-sep"></div>
+        <div class="toolbar-status" id="status">Ready</div>
+        <button class="btn btn-view" onclick="window.open(previewUrl(),'_blank')">View Live</button>
+        <button class="btn btn-publish" id="publishBtn" onclick="publishChanges()" disabled>Publish Changes</button>
+    </div>
+    <div class="editor-layout">
+        <div class="sidebar" id="sidebar"></div>
+        <div class="preview-container" id="previewContainer">
+            <iframe id="previewFrame" sandbox="allow-same-origin allow-scripts"></iframe>
+        </div>
+    </div>
+</div>
+<script>
+const REPO='goulielm-hue/extreme-photonics',BRANCH='main',API='https://api.github.com';
+let token='',currentPage='homepage',data={},originalData={},sha={};
+function doLogin(){token=document.getElementById('tokenInput').value.trim();if(!token)return;localStorage.setItem('ep_token',token);startEditor()}
+function startEditor(){document.getElementById('loginScreen').style.display='none';document.getElementById('editorApp').style.display='block';loadPage('homepage')}
+(function(){const s=localStorage.getItem('ep_token');if(s){token=s;startEditor()}})();
+async function ghFetch(path,opts={}){const res=await fetch(API+path,{...opts,headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json',...(opts.headers||{})}});if(!res.ok)throw new Error('GitHub API error: '+res.status);return res.json()}
+async function getFile(path){const info=await ghFetch('/repos/'+REPO+'/contents/'+path+'?ref='+BRANCH);const c=atob(info.content.replace(/\n/g,''));const bytes=new Uint8Array(c.split('').map(ch=>ch.charCodeAt(0)));const text=new TextDecoder().decode(bytes);return{content:JSON.parse(text),sha:info.sha}}
+async function putFile(path,content,fileSha,message){return ghFetch('/repos/'+REPO+'/contents/'+path,{method:'PUT',body:JSON.stringify({message:message,content:btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2)))),sha:fileSha,branch:BRANCH})})}
+const PAGE_CONFIG={homepage:{file:'_data/homepage.json',preview:'index.html'},team:{file:'_data/team.json',preview:'team.html'}};
+async function loadPage(page){currentPage=page;setStatus('Loading...','saving');try{const result=await getFile(PAGE_CONFIG[page].file);data=result.content;originalData=JSON.parse(JSON.stringify(data));sha[page]=result.sha;renderSidebar();refreshPreview();setStatus('Loaded — edit fields on the left, see changes on the right','');document.getElementById('publishBtn').disabled=true}catch(e){setStatus('Error: '+e.message,'error')}}
+function switchPage(page){loadPage(page)}
+function previewUrl(){return 'https://goulielm-hue.github.io/extreme-photonics/'+PAGE_CONFIG[currentPage].preview}
+function refreshPreview(){const iframe=document.getElementById('previewFrame');const url=previewUrl();iframe.srcdoc='';fetch(url).then(r=>r.text()).then(html=>{const jsonVar=JSON.stringify(data);const pageCfg=PAGE_CONFIG[currentPage];const fileName=pageCfg.file.split('/')[1];const override='<scr'+'ipt>const _of=window.fetch;window.fetch=function(u,o){if(u.includes("'+fileName+'"))return Promise.resolve({ok:true,json:()=>Promise.resolve('+jsonVar+')});return _of.call(this,u,o)};</'+'script>';const modified=html.replace('<head>','<head>'+override);iframe.srcdoc=modified})}
+function renderSidebar(){const sb=document.getElementById('sidebar');if(currentPage==='homepage')sb.innerHTML=renderHomepageSidebar();else sb.innerHTML=renderTeamSidebar()}
+function renderHomepageSidebar(){const h=data.hero||{};let html='<h3>Hero Section</h3>';html+=field('Main Title','hero.title',h.title);html+=field('Your Name','hero.name',h.name);html+=field('Affiliation','hero.affiliation',h.affiliation);html+=field('Tagline','hero.tagline',h.tagline,'textarea');html+=field('Portrait URL','hero.portrait_url',h.portrait_url);if(h.stats){html+='<h3>Key Numbers</h3>';h.stats.forEach((s,i)=>{html+='<div class="card-editor"><div class="card-editor-title">Stat '+(i+1)+'</div>'+field('Value','hero.stats.'+i+'.value',s.value)+field('Unit','hero.stats.'+i+'.unit',s.unit)+field('Label','hero.stats.'+i+'.label',s.label)+'</div>'})}if(data.research_cards){html+='<h3>Research Cards</h3>';data.research_cards.forEach((rc,i)=>{html+='<div class="card-editor"><div class="card-editor-title">'+(rc.title||'Card '+(i+1))+'</div>'+field('Tag','research_cards.'+i+'.tag',rc.tag)+field('Title','research_cards.'+i+'.title',rc.title)+field('Description','research_cards.'+i+'.description',rc.description,'textarea')+'</div>'})}if(data.highlight){const hl=data.highlight;html+='<h3>Latest Highlight</h3>';html+=field('Label','highlight.label',hl.label);html+=field('Headline','highlight.title',hl.title);html+=field('Body Text','highlight.text',hl.text,'textarea');html+=field('Meta 1','highlight.meta1',hl.meta1);html+=field('Meta 2','highlight.meta2',hl.meta2);html+=field('Meta 3','highlight.meta3',hl.meta3)}if(data.portals){html+='<h3>Quick Links</h3>';data.portals.forEach((p,i)=>{html+='<div class="card-editor"><div class="card-editor-title">'+(p.title||'Portal '+(i+1))+'</div>'+field('Title','portals.'+i+'.title',p.title)+field('Description','portals.'+i+'.description',p.description,'textarea')+field('Link URL','portals.'+i+'.link',p.link)+'</div>'})}return html}
+function renderTeamSidebar(){let html='<h3>Page Header</h3>';html+=field('Page Title','page_title',data.page_title);html+=field('Introduction','page_intro',data.page_intro,'textarea');if(data.eras){data.eras.forEach((era,ei)=>{html+='<h3>'+era.name+' ('+era.years+')</h3>';html+=field('Era Name','eras.'+ei+'.name',era.name);html+=field('Years','eras.'+ei+'.years',era.years);html+=field('Intro','eras.'+ei+'.intro',era.intro,'textarea');era.members.forEach((m,mi)=>{html+='<div class="card-editor"><div class="card-editor-title">'+m.name+'</div>'+field('Name','eras.'+ei+'.members.'+mi+'.name',m.name)+field('Role','eras.'+ei+'.members.'+mi+'.role',m.role)+field('Note','eras.'+ei+'.members.'+mi+'.note',m.note,'textarea')+'</div>'})})}return html}
+function field(label,path,value,type){type=type||'input';const esc=(value||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');if(type==='textarea')return '<div class="field-group"><label class="field-label">'+label+'</label><textarea class="field-input" data-path="'+path+'" oninput="onFieldChange(this)">'+(value||'')+'</textarea></div>';return '<div class="field-group"><label class="field-label">'+label+'</label><input class="field-input" data-path="'+path+'" value="'+esc+'" oninput="onFieldChange(this)"></div>'}
+function setNestedValue(obj,path,value){const parts=path.split('.');let cur=obj;for(let i=0;i<parts.length-1;i++){const k=isNaN(parts[i])?parts[i]:parseInt(parts[i]);cur=cur[k]}const lk=isNaN(parts[parts.length-1])?parts[parts.length-1]:parseInt(parts[parts.length-1]);cur[lk]=value}
+function onFieldChange(el){setNestedValue(data,el.dataset.path,el.value);document.getElementById('publishBtn').disabled=false;setStatus('Unsaved changes','saving');clearTimeout(window._pt);window._pt=setTimeout(()=>refreshPreview(),500)}
+async function publishChanges(){const btn=document.getElementById('publishBtn');btn.disabled=true;setStatus('Publishing to GitHub...','saving');try{const result=await putFile(PAGE_CONFIG[currentPage].file,data,sha[currentPage],'Update '+currentPage+' content (via Visual Editor)');sha[currentPage]=result.content.sha;originalData=JSON.parse(JSON.stringify(data));setStatus('Published! Site updates in ~30s.','saved');setTimeout(()=>setStatus('Ready',''),5000)}catch(e){setStatus('Error: '+e.message,'error');btn.disabled=false}}
+function setStatus(msg,cls){const el=document.getElementById('status');el.textContent=msg;el.className='toolbar-status'+(cls?' '+cls:'')}
+</script>
+</body>
+</html>
