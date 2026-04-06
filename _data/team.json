@@ -1,0 +1,103 @@
+{
+  "page_title": "The People Behind the Photons",
+  "page_intro": "Over two decades, this work has been carried by remarkable individuals — doctoral researchers, postdocs, visiting scientists, students, and collaborators — who passed through the lab and left their imprint on the science. Scroll down, and the present gives way to memory.",
+  "eras": [
+    {
+      "name": "Rostock",
+      "years": "2018 — present",
+      "intro": "The Extreme Photonics Labs at the University of Rostock, where the group builds the next generation of light-field synthesizers, pushes dynamic picoscopy toward valence-electron imaging, and explores quantum phase transitions at petahertz frequencies.",
+      "divider_text": "",
+      "members": [
+        { "initials": "EG", "name": "Eleftherios Goulielmakis", "role": "Professor of Physics (W3) · Group Leader", "note": "ERC Advanced Grant holder. Pioneer of light-field synthesis and laser picoscopy. Built and led attosecond research groups in Munich, and now Rostock.", "is_leader": true },
+        { "initials": "AM", "name": "Annika Machotzek", "role": "Administrative Assistant", "note": "Keeping the scientific machine running — from procurement and travel to finances and coordination.", "is_leader": false },
+        { "initials": "SM", "name": "Dr. Santanu Mandal", "role": "Postdoctoral Researcher", "note": "Exploring extreme nonlinear dynamics in nanostructures and light-field-driven petahertz electronics.", "is_leader": false },
+        { "initials": "ZP", "name": "Zekun Pi", "role": "PhD Student", "note": "Developing next-generation light-field synthesizers for sub-femtosecond waveform control.", "is_leader": false },
+        { "initials": "PK", "name": "Praful Kumar", "role": "PhD Student", "note": "Working on dynamic picoscopy and attosecond-resolved imaging of valence electron motion.", "is_leader": false },
+        { "initials": "CB", "name": "Cyril Benny", "role": "PhD Student", "note": "Investigating strong-field phenomena at the petahertz frontier.", "is_leader": false },
+        { "initials": "AE", "name": "Alexander Bernhard Enders", "role": "PhD Student", "note": "Building advanced experimental setups for ultrafast photonics research.", "is_leader": false },
+        { "initials": "AZ", "name": "Adrian Zelck", "role": "Master Student", "note": "", "is_leader": false },
+        { "initials": "SM", "name": "Soumyajeet Mazumdar", "role": "Master Student", "note": "", "is_leader": false },
+        { "initials": "JD", "name": "Jan Dittrich", "role": "Technical Staff", "note": "Essential technical expertise supporting the experimental infrastructure of the lab.", "is_leader": false }
+      ]
+    },
+    {
+      "name": "Rostock Alumni",
+      "years": "2018 — 2025",
+      "intro": "Those who passed through the Rostock lab and have moved on to new chapters — carrying the science with them.",
+      "divider_text": "As you go deeper, the present gives way…",
+      "members": [
+        { "initials": "HK", "name": "Hee-Yong Kim", "role": "PhD Student → Postdoc (2018–2025)", "note": "", "now_at": "KLA Semiconductors", "is_leader": false },
+        { "initials": "AH", "name": "Arthur Herzig", "role": "PhD Student", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "DV", "name": "Dominik Vaso", "role": "PhD Student", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "MZ", "name": "Mingzhan Zhan", "role": "Visiting Researcher", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "SH", "name": "Shaohua Hu", "role": "Visiting Researcher", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "SM", "name": "Shuai Meng", "role": "Collaborator (Theory)", "note": "", "now_at": "", "is_leader": false }
+      ]
+    },
+    {
+      "name": "Munich & Garching",
+      "years": "2005 — 2018",
+      "intro": "The Max Planck Institute of Quantum Optics and the Centre of Attosecond Science (MPC-AS) — where light-field synthesis was born, the first synthesized light transients were created, and the first real-time movie of valence electron motion was captured. A decade of breakthrough attosecond science.",
+      "divider_text": "Before Rostock, there was Munich…",
+      "members": [
+        { "initials": "AW", "name": "Adrian Wirth", "role": "PhD Student (2011)", "note": "First experimental realization of a multi-channel light-field synthesizer.", "now_at": "", "is_leader": false },
+        { "initials": "MH", "name": "Mohammed Th. Hassan", "role": "PhD Student (2013)", "note": "Co-developed optical attosecond pulse generation and control techniques.", "now_at": "Associate Professor, U. of Arizona", "is_leader": false },
+        { "initials": "TL", "name": "Tran Trung Luu", "role": "PhD Student (2015)", "note": "Pioneer of petahertz spectroscopy — measured the first attosecond-resolved electron dynamics in solids.", "now_at": "Assistant Professor, HKU", "is_leader": false },
+        { "initials": "AM", "name": "Antoine Moulet", "role": "PhD Student & Postdoc (2017)", "note": "Developed EUV-based spectroscopic techniques for tracking ultrafast electron dynamics.", "now_at": "", "is_leader": false },
+        { "initials": "MG", "name": "Manish Garg", "role": "PhD Student (2017)", "note": "First real-space, real-time imaging of valence-electron motion — a landmark of dynamic picoscopy.", "now_at": "Senior Researcher, MPI Stuttgart", "is_leader": false },
+        { "initials": "HL", "name": "Harshit Lakhotia", "role": "PhD Student (2021)", "note": "Laser picoscopy of graphene — sub-ångström imaging via strong-field re-collision.", "now_at": "", "is_leader": false },
+        { "initials": "OR", "name": "Olga Razskazovskaya", "role": "Postdoctoral Researcher", "note": "Expert on multilayer optics and broadband high-reflectance coatings for synthesizer mirrors.", "now_at": "", "is_leader": false },
+        { "initials": "TK", "name": "Tobias Klostermann", "role": "Postdoctoral Researcher", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "AG", "name": "Alexander Guggenmos", "role": "Postdoctoral Researcher", "note": "Designed and fabricated attosecond multilayer optics critical to EUV experiments.", "now_at": "", "is_leader": false },
+        { "initials": "IG", "name": "Ivan Grguras", "role": "Team Member", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "JG", "name": "Justin Gagnon", "role": "Team Member", "note": "", "now_at": "", "is_leader": false }
+      ]
+    },
+    {
+      "name": "Vienna & Crete",
+      "years": "1999 — 2005",
+      "intro": "The formative years — first at FORTH in Heraklion, building high-order harmonic sources and learning to tame ultrashort pulses, then in Vienna and Munich where the first direct measurements of light waves led to a new era in attosecond physics.",
+      "divider_text": "…into the years where it all began.",
+      "members": [
+        { "initials": "DC", "name": "Dimitris Charalambidis", "role": "Supervisor at FORTH (Crete)", "note": "Mentored the earliest experiments in strong-field physics and high-harmonic generation that started the journey.", "now_at": "", "is_leader": false },
+        { "initials": "NP", "name": "Nikos A. Papadogiannis", "role": "Collaborator (Crete)", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "GN", "name": "Georgios Nersisyan", "role": "Collaborator (Crete)", "note": "", "now_at": "", "is_leader": false },
+        { "initials": "AB", "name": "Andrius Baltuška", "role": "Collaborator (Vienna / TU Wien)", "note": "Pioneered CEP-stabilized few-cycle pulses — essential tools for the first attosecond measurements.", "now_at": "", "is_leader": false },
+        { "initials": "RK", "name": "Reinhard Kienberger", "role": "Collaborator (Vienna & MPQ)", "note": "Key figure in the first attosecond streaking experiments — measuring light in real time.", "now_at": "", "is_leader": false },
+        { "initials": "MU", "name": "Matthias Uiberacker", "role": "Collaborator (Vienna & MPQ)", "note": "Part of the team behind the landmark attosecond experiments.", "now_at": "", "is_leader": false }
+      ]
+    }
+  ],
+  "alumni_stats": [
+    { "number": "8+", "label": "PhDs Graduated" },
+    { "number": "5", "label": "Postdocs Completed" },
+    { "number": "3", "label": "MSc Theses" },
+    { "number": "6", "label": "BSc Theses" },
+    { "number": "3", "label": "Continents" }
+  ],
+  "constellation": {
+    "title": "The wider constellation",
+    "intro": "Mentors, long-term collaborators, and co-travellers — the broader network of scientists whose paths have intersected with the group's work over the years.",
+    "collaborators": [
+      { "name": "Ferenc Krausz", "place": "MPQ, Munich" },
+      { "name": "Robin Santra", "place": "DESY, Hamburg" },
+      { "name": "Thomas Brabec", "place": "U. Ottawa" },
+      { "name": "Mark Stockman", "place": "Georgia State U." },
+      { "name": "Vladislav Yakovlev", "place": "MPQ, Munich" },
+      { "name": "Ulf Kleineberg", "place": "LMU Munich" },
+      { "name": "Martin Schultze", "place": "TU Graz" },
+      { "name": "Nicholas Karpowicz", "place": "MPQ, Munich" },
+      { "name": "Annelise Thulin", "place": "Lund University" },
+      { "name": "Dimitris Charalambidis", "place": "FORTH, Crete" },
+      { "name": "Paraskevas Tzallas", "place": "FORTH, Crete" },
+      { "name": "Kyung Taec Kim", "place": "KAIST, Korea" },
+      { "name": "Jens Biegert", "place": "ICFO, Barcelona" },
+      { "name": "Peter Hommelhoff", "place": "FAU Erlangen" },
+      { "name": "Matthias Kling", "place": "MPQ, Munich" },
+      { "name": "Jan M. Rost", "place": "MPI-PKS, Dresden" },
+      { "name": "Angel Rubio", "place": "MPI Hamburg" },
+      { "name": "Nirit Dudovich", "place": "Weizmann Institute" },
+      { "name": "Maciej Lewenstein", "place": "ICFO, Barcelona" }
+    ]
+  }
+}
