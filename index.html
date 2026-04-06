@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extreme Photonics Labs — Eleftherios Goulielmakis</title>
+    <meta name="description" content="Extreme Photonics Labs — Pioneering attosecond science, light-field synthesis, laser picoscopy, and ultrafast electron dynamics. Led by Eleftherios Goulielmakis.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #2C3531;
+            --surface: #344039;
+            --surface-2: #3D4A43;
+            --text: #D1E8E2;
+            --text-secondary: #D9B08C;
+            --text-muted: #7A9A8E;
+            --accent: #116466;
+            --accent-glow: rgba(17,100,102,0.25);
+            --accent-bright: #FFCB9A;
+            --border: rgba(209,232,226,0.12);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-serif: 'Source Serif 4', Georgia, serif;
+            --max-w: 1200px;
+            --nav-h: 64px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--nav-h);
+            z-index: 100;
+            background: rgba(44,53,49,0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+        .nav-brand span { color: var(--accent-bright); }
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); background: var(--accent-glow); }
+        .nav-hamburger {
+            display: none; cursor: pointer; padding: 8px;
+            background: none; border: none;
+        }
+        .nav-hamburger span {
+            display: block; width: 20px; height: 1.5px;
+            background: var(--text-secondary); margin: 4px 0;
+            border-radius: 2px; transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column;
+                position: absolute; top: var(--nav-h); left: 0; right: 0;
+                background: var(--surface); border-bottom: 1px solid var(--border);
+                padding: 12px 20px;
+            }
+            .nav-hamburger { display: block; }
+        }
+
+        /* ===== HERO — FULL VIEWPORT, CINEMATIC ===== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute; inset: 0;
+            z-index: 0;
+        }
+        .hero-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            filter: saturate(0.4) brightness(0.7);
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse at 30% 60%, rgba(17,100,102,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(167,139,250,0.05) 0%, transparent 50%),
+                linear-gradient(to bottom, rgba(44,53,49,0.4) 0%, rgba(44,53,49,0.9) 100%);
+        }
+
+        .hero-canvas {
+            position: absolute; inset: 0; z-index: 1;
+        }
+
+        .hero-content {
+            position: relative; z-index: 2;
+            max-width: var(--max-w);
+            width: 100%;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 64px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-portrait {
+            flex-shrink: 0;
+            opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+        .hero-portrait img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(17,100,102,0.25);
+            box-shadow: 0 0 60px rgba(17,100,102,0.1), 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+        .hero h1 .accent {
+            background: linear-gradient(135deg, #116466, #FFCB9A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-name {
+            font-family: var(--font-serif);
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
+        }
+
+        .hero-affiliation {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-tagline {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            line-height: 1.75;
+            margin-bottom: 40px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .hero-numbers {
+            display: flex;
+            gap: 40px;
+            opacity: 0; animation: fadeUp 0.8s ease 1s forwards;
+        }
+        .hero-num {
+            text-align: left;
+        }
+        .hero-num-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            background: linear-gradient(135deg, #116466, #FFCB9A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-num-val small {
+            font-size: 0.85rem;
+            -webkit-text-fill-color: var(--text-muted);
+        }
+        .hero-num-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 28px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            width: 1px; height: 48px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+            opacity: 0; animation: fadeIn 1s ease 1.5s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+
+        /* ===== SECTION: RESEARCH GLIMPSE ===== */
+        .glimpse {
+            padding: 120px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+
+        .glimpse-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 64px;
+        }
+        .glimpse-header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            max-width: 500px;
+        }
+        .glimpse-header a {
+            color: var(--accent-bright);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            white-space: nowrap;
+            padding-bottom: 4px;
+            border-bottom: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .glimpse-header a:hover { border-color: var(--accent-bright); }
+
+        .glimpse-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .glimpse-card {
+            position: relative;
+            height: 380px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .glimpse-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.6s ease;
+            filter: brightness(0.5) saturate(0.7);
+        }
+        .glimpse-card:hover img {
+            transform: scale(1.05);
+            filter: brightness(0.7) saturate(1);
+        }
+        .glimpse-card-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(44,53,49,0.95) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px 24px;
+            transition: 0.3s;
+        }
+        .glimpse-card:hover .glimpse-card-overlay {
+            background: linear-gradient(to top, rgba(44,53,49,0.98) 0%, rgba(44,53,49,0.3) 70%);
+        }
+        .glimpse-card-tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-bright);
+            margin-bottom: 8px;
+        }
+        .glimpse-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .glimpse-card p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            opacity: 0;
+            max-height: 0;
+            transition: all 0.4s ease;
+        }
+        .glimpse-card:hover p {
+            opacity: 1;
+            max-height: 100px;
+        }
+
+        @media (max-width: 1024px) {
+            .glimpse-grid { grid-template-columns: repeat(2, 1fr); }
+            .glimpse-card { height: 320px; }
+        }
+        @media (max-width: 600px) {
+            .glimpse-grid { grid-template-columns: 1fr; }
+            .glimpse-card { height: 280px; }
+            .glimpse-card p { opacity: 1; max-height: 100px; }
+            .glimpse-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .hero-content { flex-direction: column; text-align: center; gap: 32px; }
+            .hero-text { display: flex; flex-direction: column; align-items: center; }
+            .hero-portrait { order: -1; }
+            .hero-portrait img { width: 140px; height: 140px; }
+            .hero-numbers { flex-wrap: wrap; gap: 24px; justify-content: center; }
+            .hero-tagline { text-align: center; }
+        }
+
+        /* ===== LATEST HIGHLIGHT ===== */
+        .highlight {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 100px 40px;
+        }
+        .highlight-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .highlight-img {
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        .highlight-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9);
+        }
+        .highlight-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-bright);
+            margin-bottom: 16px;
+        }
+        .highlight-text h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .highlight-text p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+        .highlight-meta {
+            display: flex;
+            gap: 24px;
+        }
+        .highlight-meta-item {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .highlight-meta-item strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .highlight-inner { grid-template-columns: 1fr; gap: 32px; }
+        }
+
+        /* ===== QUICK LINKS / PORTAL ===== */
+        .portal {
+            padding: 100px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .portal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px 28px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .portal-card:hover {
+            border-color: rgba(17,100,102,0.2);
+            background: var(--surface-2);
+            transform: translateY(-2px);
+        }
+        .portal-card:hover::before { opacity: 1; }
+        .portal-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .portal-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .portal-card .arrow {
+            position: absolute;
+            top: 28px; right: 24px;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+        .portal-card:hover .arrow { color: var(--accent-bright); transform: translateX(4px); }
+
+        @media (max-width: 768px) {
+            .portal-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        footer a:hover { color: var(--accent-bright); }
+        .footer-links { display: flex; gap: 24px; }
+
+        @media (max-width: 600px) {
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: all 0.7s ease;
+        }
+        .reveal.vis { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand"><span>Extreme</span> Photonics</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="research.html">Research</a></li>
+                <li><a href="journey.html">Journey</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="media.html">Media</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/f/d/csm_Synthesizer_of_light_0c7fadf954.jpg" alt="">
+        </div>
+        <canvas class="hero-canvas" id="heroCanvas"></canvas>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1><span class="accent">Extreme Photonics</span> Labs</h1>
+                <div class="hero-name">Eleftherios Goulielmakis</div>
+                <div class="hero-affiliation">Professor of Physics &middot; Institute of Physics &middot; University of Rostock</div>
+                <p class="hero-tagline">
+                    We control light with attosecond precision to see electrons move — in atoms, in solids, in real time.
+                </p>
+                <div class="hero-numbers">
+                    <div class="hero-num">
+                        <div class="hero-num-val">380 <small>as</small></div>
+                        <div class="hero-num-label">Shortest optical pulse</div>
+                    </div>
+                    <div class="hero-num">
+                        <div class="hero-num-val">53 <small>as</small></div>
+                        <div class="hero-num-label">Shortest electron pulse</div>
+                    </div>
+                    <div class="hero-num">
+                        <div class="hero-num-val">&lt;1 &#x212B;</div>
+                        <div class="hero-num-label">Valence electron imaging</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-portrait">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/c/a/csm_EG_820e614bd3.jpg" alt="Eleftherios Goulielmakis">
+            </div>
+        </div>
+        <div class="hero-scroll"></div>
+    </section>
+
+    <!-- RESEARCH GLIMPSE -->
+    <section class="glimpse reveal">
+        <div class="glimpse-header">
+            <h2>Four directions at the frontier of light and matter</h2>
+            <a href="research.html">Explore research &rarr;</a>
+        </div>
+        <div class="glimpse-grid">
+            <div class="glimpse-card">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/f/d/csm_Synthesizer_of_light_5fa35e1533.jpg" alt="Light-field synthesizer">
+                <div class="glimpse-card-overlay">
+                    <div class="glimpse-card-tag">Enabling Technology</div>
+                    <h3>Light-Field Synthesis</h3>
+                    <p>Multi-octave waveform control at the sub-cycle level. Optical attosecond pulses — the shortest light ever made.</p>
+                </div>
+            </div>
+            <div class="glimpse-card">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/1/7/csm_MultiPHz_Electronics12_5314e7a9d8.jpg" alt="Dynamic Picoscopy">
+                <div class="glimpse-card-overlay">
+                    <div class="glimpse-card-tag">ERC Advanced Grant</div>
+                    <h3>Dynamic Picoscopy</h3>
+                    <p>Photographing valence electrons in crystals with sub-angstrom resolution. Making the chemical bond visible.</p>
+                </div>
+            </div>
+            <div class="glimpse-card">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/Alle_MNF/Physik_Xplab/Fotos/img1.png" alt="Attosecond field emission">
+                <div class="glimpse-card-overlay">
+                    <div class="glimpse-card-tag">Nature 2023</div>
+                    <h3>Strong-Field Nanooptics</h3>
+                    <p>Attosecond electron emission from nanotips. The shortest electron pulse ever measured: 53 attoseconds.</p>
+                </div>
+            </div>
+            <div class="glimpse-card">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/d/8/csm_excitonics_716ab99686.png" alt="PHz spectroscopy">
+                <div class="glimpse-card-overlay">
+                    <div class="glimpse-card-tag">CRC LiMatI</div>
+                    <h3>PHz Spectroscopy</h3>
+                    <p>Probing quantum phase transitions in correlated matter with single-cycle light transients.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LATEST HIGHLIGHT -->
+    <section class="highlight">
+        <div class="highlight-inner reveal">
+            <div class="highlight-img">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/Alle_MNF/Physik_Xplab/Fotos/EG.jpg" alt="Eleftherios Goulielmakis — ERC Advanced Grant">
+            </div>
+            <div class="highlight-text">
+                <div class="highlight-label">Latest</div>
+                <h2>ERC Advanced Grant awarded for Ultrafast Picoscopy of Solids</h2>
+                <p>
+                    The European Research Council has selected the ULPIS project for an Advanced Grant — extending laser picoscopy to three-dimensional imaging and real-time movies of electron and atomic motion across quantum phase transitions.
+                </p>
+                <div class="highlight-meta">
+                    <div class="highlight-meta-item"><strong>2.5 M&euro;</strong> funding</div>
+                    <div class="highlight-meta-item"><strong>2023&ndash;2028</strong> duration</div>
+                    <div class="highlight-meta-item"><strong>ERC</strong> Advanced Grant</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTAL: NAVIGATE DEEPER -->
+    <section class="portal reveal">
+        <div class="portal-grid">
+            <a href="journey.html" class="portal-card">
+                <span class="arrow">&rarr;</span>
+                <h3>Scientific Journey</h3>
+                <p>From Crete to the attosecond frontier — two decades of discovery across four countries.</p>
+            </a>
+            <a href="publications.html" class="portal-card">
+                <span class="arrow">&rarr;</span>
+                <h3>Publications</h3>
+                <p>Two decades of attosecond science, strong-field physics, and ultrafast spectroscopy of matter.</p>
+            </a>
+            <a href="team.html" class="portal-card">
+                <span class="arrow">&rarr;</span>
+                <h3>The Team</h3>
+                <p>Physicists from Greece, India, China, and Germany — building the next generation of experiments.</p>
+            </a>
+            <a href="media.html" class="portal-card">
+                <span class="arrow">&rarr;</span>
+                <h3>Media &amp; Press</h3>
+                <p>Coverage in Nature, New Scientist, Physics World, The Economist, and media worldwide.</p>
+            </a>
+            <a href="research.html#teaching" class="portal-card">
+                <span class="arrow">&rarr;</span>
+                <h3>Teaching</h3>
+                <p>Courses in ultrafast physics, electrodynamics, and physics for life sciences.</p>
+            </a>
+            <a href="contact.html" class="portal-card">
+                <span class="arrow">&rarr;</span>
+                <h3>Join Us / Contact</h3>
+                <p>PhD, postdoc, and master's positions in attosecond science and extreme photonics.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <span>&copy; 2026 Extreme Photonics Labs &middot; Eleftherios Goulielmakis</span>
+        <div class="footer-links">
+            <a href="https://scholar.google.de/citations?user=z7k9lSAAAAAJ" target="_blank">Google Scholar</a>
+            <a href="https://www.uni-rostock.de" target="_blank">Uni Rostock</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+    // Mobile menu
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Hero canvas — animated few-cycle pulse
+    (function() {
+        const c = document.getElementById('heroCanvas');
+        const ctx = c.getContext('2d');
+        let w, h, t = 0;
+        function resize() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            t += 0.012;
+            const cy = h * 0.55;
+
+            // Subtle grid
+            ctx.strokeStyle = 'rgba(17,100,102,0.02)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < w; x += 80) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+            for (let y = 0; y < h; y += 80) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+
+            // Few-cycle pulse
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(17,100,102,0.25)';
+            ctx.lineWidth = 1.5;
+            for (let x = 0; x < w; x++) {
+                const env = Math.exp(-Math.pow((x - w*0.5) / (w*0.16), 2));
+                const y = cy + Math.sin(x * 0.028 + t * 1.2) * env * 70;
+                x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Envelope
+            ctx.setLineDash([3, 5]);
+            ctx.strokeStyle = 'rgba(17,100,102,0.08)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let x = 0; x < w; x++) {
+                const env = Math.exp(-Math.pow((x - w*0.5) / (w*0.16), 2));
+                x === 0 ? ctx.moveTo(x, cy - env * 70) : ctx.lineTo(x, cy - env * 70);
+            }
+            ctx.stroke();
+            ctx.beginPath();
+            for (let x = 0; x < w; x++) {
+                const env = Math.exp(-Math.pow((x - w*0.5) / (w*0.16), 2));
+                x === 0 ? ctx.moveTo(x, cy + env * 70) : ctx.lineTo(x, cy + env * 70);
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Particles
+            for (let i = 0; i < 20; i++) {
+                const px = (i * 137 + t * 15) % w;
+                const py = (i * 97 + Math.sin(t + i) * 30) % h;
+                ctx.beginPath();
+                ctx.arc(px, py, 1, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(17,100,102,${0.04 + 0.03 * Math.sin(t * 2 + i)})`;
+                ctx.fill();
+            }
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+    </script>
+
+</body>
+</html>

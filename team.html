@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colleagues — Extreme Photonics Labs</title>
+    <meta name="description" content="The people behind two decades of extreme photonics — from the current Rostock team to the alumni who shaped attosecond science across the world.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #2C3531;
+            --surface: #344039;
+            --surface-2: #3D4A43;
+            --text: #D1E8E2;
+            --text-secondary: #D9B08C;
+            --text-muted: #7A9A8E;
+            --accent: #116466;
+            --accent-bright: #FFCB9A;
+            --accent-glow: rgba(17,100,102,0.25);
+            --border: rgba(209,232,226,0.12);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-serif: 'Source Serif 4', Georgia, serif;
+            --max-w: 1200px;
+            --nav-h: 64px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--nav-h);
+            z-index: 100;
+            background: rgba(44,53,49,0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+        .nav-brand span { color: var(--accent-bright); }
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent-bright); background: var(--accent-glow); }
+        .nav-links a.active { color: var(--accent-bright); }
+        .nav-hamburger {
+            display: none; cursor: pointer; padding: 8px;
+            background: none; border: none;
+        }
+        .nav-hamburger span {
+            display: block; width: 20px; height: 1.5px;
+            background: var(--text-secondary); margin: 4px 0;
+            border-radius: 2px; transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column;
+                position: absolute; top: var(--nav-h); left: 0; right: 0;
+                background: var(--surface); border-bottom: 1px solid var(--border);
+                padding: 12px 20px;
+            }
+            .nav-hamburger { display: block; }
+        }
+
+        /* ===== PAGE HERO ===== */
+        .page-hero {
+            padding: 160px 40px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(17,100,102,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .page-hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .page-hero .lead {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        /* ===== SCROLL INDICATOR ===== */
+        .scroll-hint {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: drift 2.5s ease-in-out infinite;
+        }
+        .scroll-hint .arrow-down {
+            width: 20px; height: 20px;
+            border-right: 1.5px solid var(--text-muted);
+            border-bottom: 1.5px solid var(--text-muted);
+            transform: rotate(45deg);
+        }
+        @keyframes drift {
+            0%, 100% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(8px); opacity: 1; }
+        }
+
+        /* ===== ERA SECTIONS ===== */
+        .era {
+            position: relative;
+            padding: 80px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+
+        .era-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 48px;
+        }
+        .era-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-bright), transparent);
+        }
+        .era-label {
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .era-years {
+            font-size: 0.82rem;
+            color: var(--accent-bright);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+        .era-intro {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 700px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        /* ===== PEOPLE GRID ===== */
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .person-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 24px;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .person-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-bright), var(--accent));
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+        .person-card:hover {
+            background: var(--surface-2);
+            border-color: rgba(255,203,154,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(17,100,102,0.2), 0 4px 16px rgba(0,0,0,0.3);
+        }
+        .person-card:hover::before { opacity: 1; }
+        .person-card:hover .person-name { color: #fff; }
+        .person-card:hover .person-role { color: var(--accent-bright); }
+        .person-card:hover .person-note { color: var(--text); }
+
+        .person-avatar {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(17,100,102,0.3), rgba(17,100,102,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-bright);
+            margin-bottom: 16px;
+            border: 1.5px solid rgba(17,100,102,0.5);
+        }
+
+        .person-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .person-role {
+            font-size: 0.82rem;
+            color: var(--accent-bright);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .person-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .person-where {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.72rem;
+            color: var(--accent-bright);
+            background: rgba(17,100,102,0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(17,100,102,0.35);
+        }
+
+        /* ===== LEADER CARD (Prof) ===== */
+        .leader-card {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            background: linear-gradient(135deg, var(--surface-2), rgba(17,100,102,0.12));
+            border: 1px solid rgba(17,100,102,0.35);
+            border-radius: 16px;
+            padding: 36px 40px;
+        }
+        .leader-card .person-avatar {
+            width: 80px; height: 80px;
+            font-size: 1.6rem;
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+        .leader-card .leader-info { flex: 1; }
+        .leader-card .person-name { font-size: 1.15rem; }
+        .leader-card .person-role { font-size: 0.88rem; margin-bottom: 6px; }
+        .leader-card .person-note {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+
+        @media (max-width: 600px) {
+            .leader-card { flex-direction: column; text-align: center; padding: 28px 20px; }
+            .leader-card .person-note { max-width: 100%; }
+        }
+
+        /* ===== DEPTH FADE (subtle — past eras slightly softer) ===== */
+        .era[data-depth="1"] { opacity: 1; }
+        .era[data-depth="2"] .person-card { border-color: rgba(255,255,255,0.08); }
+        .era[data-depth="3"] .person-card { border-color: rgba(255,255,255,0.07); }
+
+        /* ===== CHAPTER DIVIDERS ===== */
+        .chapter-divider {
+            text-align: center;
+            padding: 80px 40px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .chapter-divider .divider-line {
+            width: 60px;
+            height: 1px;
+            background: var(--accent-bright);
+            margin: 0 auto 20px;
+        }
+        .chapter-divider p {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ===== COLLABORATOR CONSTELLATION ===== */
+        .collab-section {
+            padding: 60px 40px 80px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .collab-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        .collab-tag {
+            padding: 6px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .collab-tag:hover {
+            border-color: rgba(255,203,154,0.4);
+            color: var(--accent-bright);
+            background: rgba(17,100,102,0.15);
+            box-shadow: 0 2px 12px rgba(17,100,102,0.2);
+        }
+        .collab-tag .tag-place {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            margin-left: 4px;
+        }
+
+        /* ===== NUMBERS ASIDE ===== */
+        .alumni-numbers {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            padding: 48px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .alumni-stat {
+            text-align: center;
+        }
+        .alumni-stat .num {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-bright);
+        }
+        .alumni-stat .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        footer a:hover { color: var(--accent-bright); }
+        .footer-links { display: flex; gap: 24px; }
+
+        @media (max-width: 600px) {
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: all 0.7s ease;
+        }
+        .reveal.vis {
+            opacity: 1; transform: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">Extreme <span>Photonics</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="research.html">Research</a></li>
+                <li><a href="journey.html">Journey</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="team.html" class="active">Colleagues</a></li>
+                <li><a href="media.html">Media</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <h1 class="reveal">The People Behind the Photons</h1>
+        <p class="lead reveal">Over two decades, this work has been carried by remarkable individuals — doctoral researchers, postdocs, visiting scientists, students, and collaborators — who passed through the lab and left their imprint on the science. Scroll down, and the present gives way to memory.</p>
+        <div class="scroll-hint reveal">
+            <span>Scroll to explore</span>
+            <div class="arrow-down"></div>
+        </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- ERA 1: ROSTOCK — NOW (2018–present) -->
+    <!-- ========================================= -->
+    <div class="era reveal" data-depth="1" id="rostock">
+        <div class="era-header">
+            <div class="era-line"></div>
+            <div>
+                <div class="era-label">Rostock</div>
+                <div class="era-years">2018 — present</div>
+            </div>
+        </div>
+        <p class="era-intro">The Extreme Photonics Labs at the University of Rostock, where the group builds the next generation of light-field synthesizers, pushes dynamic picoscopy toward valence-electron imaging, and explores quantum phase transitions at petahertz frequencies.</p>
+
+        <div class="people-grid">
+
+            <!-- Group Leader -->
+            <div class="leader-card">
+                <div class="person-avatar">EG</div>
+                <div class="leader-info">
+                    <div class="person-name">Eleftherios Goulielmakis</div>
+                    <div class="person-role">Professor of Physics (W3) &middot; Group Leader</div>
+                    <div class="person-note">Founded the Extreme Photonics Labs in 2018. ERC Advanced Grant holder. Pioneered light-field synthesis, attosecond optical pulses, and laser picoscopy of crystals.</div>
+                </div>
+            </div>
+
+            <!-- Administrative Assistant -->
+            <div class="person-card">
+                <div class="person-avatar">AM</div>
+                <div class="person-name">Annika Machotzek</div>
+                <div class="person-role">Administrative Assistant</div>
+                <div class="person-note">The indispensable backbone of the lab — coordination, administration, and the person who actually makes everything run.</div>
+            </div>
+
+            <!-- Postdoctoral Researchers -->
+            <div class="person-card">
+                <div class="person-avatar">SM</div>
+                <div class="person-name">Dr. Santanu Mandal</div>
+                <div class="person-role">Postdoctoral Researcher</div>
+                <div class="person-note">Advancing laser-based microscopy with picometer resolution via high harmonic generation, studying extreme nonlinear behaviour of solids under intense light fields, and probing correlated materials at ultrafast time scales.</div>
+            </div>
+
+            <!-- PhD Students -->
+            <div class="person-card">
+                <div class="person-avatar">ZP</div>
+                <div class="person-name">Zekun Pi</div>
+                <div class="person-role">PhD Student</div>
+                <div class="person-note">Development of new-generation ultrafast lasers and their characterisation. These lasers find applications in studying electrons on their native time scales.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">PK</div>
+                <div class="person-name">Praful Kumar</div>
+                <div class="person-role">PhD Student</div>
+                <div class="person-note">Response of correlated materials and their phase transitions at ultrafast time scales. Reconstruction techniques for picometer-resolution imaging via high harmonic generation.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">CB</div>
+                <div class="person-name">Cyril Benny</div>
+                <div class="person-role">PhD Student</div>
+                <div class="person-note">Previously worked on laser-produced plasmas and optical nonlinearity of organic materials. Now pursuing doctoral research in the group.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">AE</div>
+                <div class="person-name">Alexander Bernhard Enders</div>
+                <div class="person-role">PhD Student</div>
+                <div class="person-note">Background in polarization-tailored pump pulses for TrARPES at Fritz-Haber-Institut and crystal growth at Heinrich-Hertz-Institut. Now working on ultrafast laser science.</div>
+            </div>
+
+            <!-- Master Students -->
+            <div class="person-card">
+                <div class="person-avatar">AZ</div>
+                <div class="person-name">Adrian Zelck</div>
+                <div class="person-role">Master Student</div>
+                <div class="person-note">Currently conducting his master's thesis at the University of Rostock.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">SM</div>
+                <div class="person-name">Soumyajeet Mazumdar</div>
+                <div class="person-role">Master Student</div>
+                <div class="person-note">Currently conducting his master's thesis at the University of Rostock.</div>
+            </div>
+
+            <!-- Technical Staff -->
+            <div class="person-card">
+                <div class="person-avatar">JD</div>
+                <div class="person-name">Jan Dittrich</div>
+                <div class="person-role">Technical Staff</div>
+                <div class="person-note">Technical support and laboratory infrastructure for the Extreme Photonics Labs.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- DIVIDER: into the past -->
+    <!-- ========================================= -->
+    <div class="chapter-divider reveal">
+        <div class="divider-line"></div>
+        <p>As you go deeper, the present gives way&hellip;</p>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- ERA 2: ROSTOCK ALUMNI (joined in Rostock, since moved on) -->
+    <!-- ========================================= -->
+    <div class="era reveal" data-depth="2" id="rostock-alumni">
+        <div class="era-header">
+            <div class="era-line"></div>
+            <div>
+                <div class="era-label">Rostock Alumni</div>
+                <div class="era-years">2018 — 2025</div>
+            </div>
+        </div>
+        <p class="era-intro">Those who passed through the Rostock lab and have moved on to new chapters — carrying the science with them.</p>
+
+        <div class="people-grid">
+
+            <div class="person-card">
+                <div class="person-avatar">HK</div>
+                <div class="person-name">Hee-Yong Kim</div>
+                <div class="person-role">PhD Student &rarr; Postdoc (2018–2025)</div>
+                <div class="person-note">Joined as a master's student, completed his PhD on attosecond field emission (Nature 2023), stayed for postdoctoral work on single-cycle synthesis. Eleven years in the group.</div>
+                <span class="person-where">Now at KLA Semiconductors</span>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">AH</div>
+                <div class="person-name">Arthur Herzig</div>
+                <div class="person-role">PhD Student</div>
+                <div class="person-note">Cross-process interference in single-cycle electron emission from metal needle tips. Strong-field nanooptics.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">DV</div>
+                <div class="person-name">Dominik Vaso</div>
+                <div class="person-role">PhD Student</div>
+                <div class="person-note">Hollow-core fiber compression, new laser source development for the lab.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">MZ</div>
+                <div class="person-name">Mingzhan Zhan</div>
+                <div class="person-role">Visiting Researcher</div>
+                <div class="person-note">Laser picoscopy, high harmonic spectroscopy in crystalline solids.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">SH</div>
+                <div class="person-name">Shaohua Hu</div>
+                <div class="person-role">Visiting Researcher</div>
+                <div class="person-note">Laser picoscopy, high harmonic generation in crystalline systems.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">SM</div>
+                <div class="person-name">Shuai Meng</div>
+                <div class="person-role">Collaborator (Theory)</div>
+                <div class="person-note">Theoretical support for picoscopy experiments — electronic structure calculations and valence electron modeling.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- DIVIDER -->
+    <!-- ========================================= -->
+    <div class="chapter-divider reveal">
+        <div class="divider-line"></div>
+        <p>Before Rostock, there was Munich&hellip;</p>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- ERA 3: MUNICH / MPQ & MPC-AS (2005–2018) -->
+    <!-- ========================================= -->
+    <div class="era reveal" data-depth="2" id="munich">
+        <div class="era-header">
+            <div class="era-line"></div>
+            <div>
+                <div class="era-label">Munich &amp; Garching</div>
+                <div class="era-years">2005 — 2018</div>
+            </div>
+        </div>
+        <p class="era-intro">The Max Planck Institute of Quantum Optics and the Centre of Attosecond Science (MPC-AS) — where light-field synthesis was born, the first synthesized light transients were created, and the first real-time movie of valence electron motion was captured. A decade of breakthrough attosecond science.</p>
+
+        <div class="people-grid">
+
+            <!-- PhD students (Munich era) -->
+            <div class="person-card">
+                <div class="person-avatar">AW</div>
+                <div class="person-name">Adrian Wirth</div>
+                <div class="person-role">PhD Student (2011)</div>
+                <div class="person-note">Co-architect of synthesized light transients. Key contributor to the Science 2011 milestone on light-field synthesis.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">MH</div>
+                <div class="person-name">Mohammed Th. Hassan</div>
+                <div class="person-role">PhD Student (2013)</div>
+                <div class="person-note">Optical attosecond pulses and probing bound electrons. First to synthesize an optical attosecond pulse (Nature 2016).</div>
+                <span class="person-where">Now Associate Professor, U. of Arizona</span>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">TL</div>
+                <div class="person-name">Tran Trung Luu</div>
+                <div class="person-role">PhD Student (2015)</div>
+                <div class="person-note">Extreme UV high harmonic spectroscopy of solids (Nature 2015). Opened attosecond science to condensed matter.</div>
+                <span class="person-where">Now Assistant Professor, HKU</span>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">AM</div>
+                <div class="person-name">Antoine Moulet</div>
+                <div class="person-role">PhD Student &amp; Postdoc (2017)</div>
+                <div class="person-note">Attosecond XUV-optical spectroscopy. First to probe soft x-ray excitons on attosecond timescales (Science 2017).</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">MG</div>
+                <div class="person-name">Manish Garg</div>
+                <div class="person-role">PhD Student (2017)</div>
+                <div class="person-note">Multi-PHz electronic metrology in solids (Nature 2016). Light-induced currents beyond the PHz frontier.</div>
+                <span class="person-where">Now Senior Researcher, MPI Stuttgart</span>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">HL</div>
+                <div class="person-name">Harshit Lakhotia</div>
+                <div class="person-role">PhD Student (2021)</div>
+                <div class="person-note">Laser picoscopy of valence electrons in solids — real-space imaging at the scale of the unit cell (Nature 2020).</div>
+            </div>
+
+            <!-- Postdocs (Munich era) -->
+            <div class="person-card">
+                <div class="person-avatar">OR</div>
+                <div class="person-name">Olga Razskazovskaya</div>
+                <div class="person-role">Postdoctoral Researcher</div>
+                <div class="person-note">Multilayer mirror design for ultrashort pulses, nonlinear properties of dielectric multilayers, pulse compression in the near-UV.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">TK</div>
+                <div class="person-name">Tobias Klostermann</div>
+                <div class="person-role">Postdoctoral Researcher</div>
+                <div class="person-note">High harmonic generation infrastructure, attosecond XUV spectroscopy in condensed matter systems.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">AG</div>
+                <div class="person-name">Alexander Guggenmos</div>
+                <div class="person-role">Postdoctoral Researcher</div>
+                <div class="person-note">Soft x-ray excitonics, advanced multilayer optics for attosecond pulse delivery.</div>
+            </div>
+
+            <!-- Key team members -->
+            <div class="person-card">
+                <div class="person-avatar">IG</div>
+                <div class="person-name">Ivan Grguras</div>
+                <div class="person-role">Team Member</div>
+                <div class="person-note">Attosecond photonics — synthesis and control of light transients. Technical backbone of the light-field synthesizer.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">JG</div>
+                <div class="person-name">Justin Gagnon</div>
+                <div class="person-role">Team Member</div>
+                <div class="person-note">FROG characterization of attosecond pulses, attosecond metrology algorithms and analysis.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- DIVIDER -->
+    <!-- ========================================= -->
+    <div class="chapter-divider reveal">
+        <div class="divider-line"></div>
+        <p>&hellip;into the years where it all began.</p>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- ERA 3: VIENNA & CRETE (1999–2005) -->
+    <!-- ========================================= -->
+    <div class="era reveal" data-depth="3" id="early">
+        <div class="era-header">
+            <div class="era-line"></div>
+            <div>
+                <div class="era-label">Vienna &amp; Crete</div>
+                <div class="era-years">1999 — 2005</div>
+            </div>
+        </div>
+        <p class="era-intro">The formative years — first at FORTH in Heraklion, building high-order harmonic sources and learning to tame ultrashort pulses, then in Vienna and Munich where the first direct measurements of light waves led to a new era in attosecond physics.</p>
+
+        <div class="people-grid">
+
+            <div class="person-card">
+                <div class="person-avatar">DC</div>
+                <div class="person-name">Dimitris Charalambidis</div>
+                <div class="person-role">Supervisor at FORTH (Crete)</div>
+                <div class="person-note">Guided early experiments in high harmonic generation and ultrafast interferometry at the Institute of Electronic Structure &amp; Lasers.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">NP</div>
+                <div class="person-name">Nikos A. Papadogiannis</div>
+                <div class="person-role">Collaborator (Crete)</div>
+                <div class="person-note">Temporal characterization of harmonics, transmission grating interferometry for attosecond pulse characterization.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">GN</div>
+                <div class="person-name">Georgios Nersisyan</div>
+                <div class="person-role">Collaborator (Crete)</div>
+                <div class="person-note">Dispersionless Michelson interferometer for attosecond pulse characterization. Early HHG source development.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">AB</div>
+                <div class="person-name">Andrius Baltuška</div>
+                <div class="person-role">Collaborator (Vienna / TU Wien)</div>
+                <div class="person-note">Phase-controlled amplification of few-cycle pulses, carrier-envelope phase stabilization — essential technology for the attosecond revolution.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">RK</div>
+                <div class="person-name">Reinhard Kienberger</div>
+                <div class="person-role">Collaborator (Vienna &amp; MPQ)</div>
+                <div class="person-note">Atomic Transient Recorder (Nature 2004), attosecond metrology with controlled light waveforms. Pioneering streaking measurements.</div>
+            </div>
+
+            <div class="person-card">
+                <div class="person-avatar">MU</div>
+                <div class="person-name">Matthias Uiberacker</div>
+                <div class="person-role">Collaborator (Vienna &amp; MPQ)</div>
+                <div class="person-note">Attosecond metrology with controlled light waveforms, direct measurement of light waves.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- ALUMNI NUMBERS -->
+    <!-- ========================================= -->
+    <div class="alumni-numbers reveal">
+        <div class="alumni-stat">
+            <div class="num">8+</div>
+            <div class="label">PhDs Graduated</div>
+        </div>
+        <div class="alumni-stat">
+            <div class="num">5</div>
+            <div class="label">Postdocs Completed</div>
+        </div>
+        <div class="alumni-stat">
+            <div class="num">3</div>
+            <div class="label">MSc Theses</div>
+        </div>
+        <div class="alumni-stat">
+            <div class="num">6</div>
+            <div class="label">BSc Theses</div>
+        </div>
+        <div class="alumni-stat">
+            <div class="num">3</div>
+            <div class="label">Continents</div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- WIDER CONSTELLATION — Mentors & Collaborators -->
+    <!-- ========================================= -->
+    <div class="collab-section reveal" id="constellation">
+        <div class="era-header">
+            <div class="era-line"></div>
+            <div>
+                <div class="era-label">The wider constellation</div>
+            </div>
+        </div>
+        <p class="era-intro">Mentors, long-term collaborators, and co-travellers — the broader network of scientists whose paths have intersected with the group's work over the years.</p>
+
+        <div class="collab-cloud">
+            <span class="collab-tag">Ferenc Krausz <span class="tag-place">MPQ, Munich</span></span>
+            <span class="collab-tag">Robin Santra <span class="tag-place">DESY, Hamburg</span></span>
+            <span class="collab-tag">Thomas Brabec <span class="tag-place">U. Ottawa</span></span>
+            <span class="collab-tag">Thomas Fennel <span class="tag-place">U. Rostock</span></span>
+            <span class="collab-tag">Peter Hommelhoff <span class="tag-place">FAU Erlangen</span></span>
+            <span class="collab-tag">Laszlo Seiffert <span class="tag-place">U. Rostock</span></span>
+            <span class="collab-tag">Vladislav Yakovlev <span class="tag-place">MPQ, Munich</span></span>
+            <span class="collab-tag">Ulf Kleineberg <span class="tag-place">LMU, Munich</span></span>
+            <span class="collab-tag">Volodymyr Pervak <span class="tag-place">LMU, Munich</span></span>
+            <span class="collab-tag">Adrian Cavalieri <span class="tag-place">XFEL, Hamburg</span></span>
+            <span class="collab-tag">Péter Dombi <span class="tag-place">Wigner RCP, Budapest</span></span>
+            <span class="collab-tag">Katalin Varjú <span class="tag-place">U. Szeged</span></span>
+            <span class="collab-tag">Andrei Zheltikov <span class="tag-place">MSU, Moscow</span></span>
+            <span class="collab-tag">Philip Baum <span class="tag-place">U. Konstanz</span></span>
+            <span class="collab-tag">Stephen R. Leone <span class="tag-place">UC Berkeley</span></span>
+            <span class="collab-tag">Matthias Kling <span class="tag-place">MPQ, Munich</span></span>
+            <span class="collab-tag">Dimitris Charalambidis <span class="tag-place">FORTH, Crete</span></span>
+            <span class="collab-tag">Nikos Karpowicz <span class="tag-place">MPQ, Munich</span></span>
+            <span class="collab-tag">Alexander Apolonski <span class="tag-place">MPQ, Munich</span></span>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <span>&copy; 2026 Extreme Photonics Labs &middot; Eleftherios Goulielmakis</span>
+        <div class="footer-links">
+            <a href="https://scholar.google.de/citations?user=z7k9lSAAAAAJ" target="_blank">Google Scholar</a>
+            <a href="https://www.uni-rostock.de" target="_blank">Uni Rostock</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+    // Mobile menu
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Subtle depth effect — past eras get slightly more muted as you scroll deeper
+    const eras = document.querySelectorAll('.era');
+    const depthObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            const depth = parseInt(e.target.dataset.depth) || 1;
+            if (e.isIntersecting) {
+                e.target.style.opacity = Math.max(0.7, 1 - (depth - 1) * 0.1);
+            }
+        });
+    }, { threshold: 0.2 });
+    eras.forEach(era => depthObs.observe(era));
+    </script>
+
+</body>
+</html>

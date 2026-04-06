@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Journey — Extreme Photonics Labs</title>
+    <meta name="description" content="The scientific journey of Eleftherios Goulielmakis — from Crete to the attosecond frontier, across four countries and two decades of discovery.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #2C3531; --surface: #344039; --surface-2: #3D4A43;
+            --text: #D1E8E2; --text-secondary: #D9B08C; --text-muted: #7A9A8E;
+            --accent: #116466; --accent-glow: rgba(17,100,102,0.25);
+            --accent-bright: #FFCB9A;
+            --border: rgba(209,232,226,0.12);
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-serif: 'Source Serif 4', Georgia, serif;
+            --max-w: 1200px; --nav-h: 64px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+        /* NAV */
+        nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100; background: rgba(44,53,49,0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { font-weight: 600; font-size: 0.95rem; color: var(--text); text-decoration: none; letter-spacing: -0.01em; }
+        .nav-brand span { color: var(--accent-bright); }
+        .nav-links { display: flex; gap: 4px; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; padding: 6px 14px; border-radius: 6px; transition: all 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--accent-glow); }
+        .nav-hamburger { display: none; cursor: pointer; padding: 8px; background: none; border: none; }
+        .nav-hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text-secondary); margin: 4px 0; border-radius: 2px; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; }
+            .nav-hamburger { display: block; }
+        }
+
+        /* PAGE HERO */
+        .page-hero { padding: calc(var(--nav-h) + 80px) 40px 60px; max-width: var(--max-w); margin: 0 auto; position: relative; }
+        .page-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 500px; background: radial-gradient(ellipse at 20% 40%, rgba(17,100,102,0.06) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(217,176,140,0.04) 0%, transparent 50%); pointer-events: none; }
+        .page-hero-tag { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent-bright); margin-bottom: 20px; position: relative; }
+        .page-hero h1 { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; position: relative; }
+        .page-hero-intro { font-size: 1.05rem; color: var(--text-secondary); max-width: 680px; line-height: 1.85; position: relative; }
+
+        /* JOURNEY MAP */
+        .journey-map { padding: 40px 40px 80px; max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; border-radius: 12px; overflow: hidden; }
+        .journey-place { background: var(--surface); padding: 28px 20px; text-align: center; text-decoration: none; color: inherit; position: relative; transition: background 0.3s; }
+        .journey-place:hover { background: var(--surface-2); }
+        .journey-place::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-bright)); opacity: 0; transition: 0.3s; }
+        .journey-place:hover::before { opacity: 1; }
+        .journey-place-flag { font-size: 1.5rem; margin-bottom: 6px; }
+        .journey-place h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
+        .journey-place-years { font-size: 0.7rem; color: var(--accent-bright); font-weight: 600; }
+        .journey-place-role { font-size: 0.68rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+        @media (max-width: 700px) { .journey-map { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 420px) { .journey-map { grid-template-columns: 1fr; } }
+
+        /* PRIZES BANNER */
+        .prizes { padding: 0 40px 80px; max-width: var(--max-w); margin: 0 auto; }
+        .prizes-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-bright); margin-bottom: 20px; }
+        .prizes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; border-radius: 12px; overflow: hidden; }
+        .prize-card { background: var(--surface); padding: 24px 20px; text-align: center; transition: background 0.3s; }
+        .prize-card:hover { background: var(--surface-2); }
+        .prize-card h3 { font-size: 0.88rem; font-weight: 600; line-height: 1.3; margin-bottom: 6px; }
+        .prize-card-org { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 4px; }
+        .prize-card-year { font-size: 0.78rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        @media (max-width: 700px) { .prizes-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        /* TIMELINE */
+        .timeline { padding: 40px 40px 100px; max-width: var(--max-w); margin: 0 auto; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: calc(40px + 140px + 32px); top: 40px; bottom: 100px; width: 1px; background: linear-gradient(to bottom, var(--accent), var(--border), transparent); }
+
+        .timeline-era { margin-bottom: 80px; }
+        .timeline-era:last-child { margin-bottom: 0; }
+        .era-header { display: flex; align-items: baseline; gap: 48px; margin-bottom: 32px; }
+        .era-years { width: 140px; flex-shrink: 0; text-align: right; font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, var(--accent), var(--accent-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .era-title-block { padding-left: 32px; position: relative; }
+        .era-title-block::before { content: ''; position: absolute; left: -5px; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(17,100,102,0.4); }
+        .era-title { font-family: var(--font-serif); font-size: clamp(1.2rem, 2.5vw, 1.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+        .era-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+
+        .era-content { display: flex; gap: 48px; }
+        .era-spacer { width: 140px; flex-shrink: 0; }
+        .era-body { padding-left: 32px; flex: 1; max-width: 700px; }
+        .era-body p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.85; margin-bottom: 14px; }
+        .era-body p:last-child { margin-bottom: 0; }
+
+        .era-highlights { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .era-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.4; transition: 0.3s; }
+        .era-chip:hover { border-color: rgba(17,100,102,0.2); background: var(--surface-2); }
+        .era-chip strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
+        .era-chip .venue { color: var(--accent-bright); font-weight: 500; font-size: 0.68rem; }
+
+        /* NUMBERS BAR */
+        .numbers-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 60px 40px; }
+        .numbers-bar-inner { max-width: var(--max-w); margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+        .nb-item { text-align: center; flex: 1; min-width: 100px; }
+        .nb-val { font-size: 1.8rem; font-weight: 700; line-height: 1; background: linear-gradient(135deg, var(--accent), var(--accent-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nb-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-top: 6px; }
+
+        /* GRANTS */
+        .grants { padding: 100px 40px; max-width: var(--max-w); margin: 0 auto; }
+        .grants-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-bright); margin-bottom: 12px; }
+        .grants h2 { font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 40px; }
+        .grants-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .grant-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; transition: 0.3s; }
+        .grant-card:hover { border-color: rgba(17,100,102,0.15); background: var(--surface-2); }
+        .grant-card-source { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-bright); margin-bottom: 6px; }
+        .grant-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+        .grant-card-amount { font-size: 1.1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-bright)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; }
+        .grant-card-meta { font-size: 0.7rem; color: var(--text-muted); }
+        @media (max-width: 768px) { .grants-grid { grid-template-columns: 1fr; } }
+
+        /* PHD TREE */
+        .phd-tree { padding: 0 40px 100px; max-width: var(--max-w); margin: 0 auto; }
+        .phd-tree-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-bright); margin-bottom: 12px; }
+        .phd-tree h2 { font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; }
+        .phd-tree-intro { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; max-width: 600px; margin-bottom: 32px; }
+        .phd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .phd-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 16px; transition: 0.3s; }
+        .phd-card:hover { border-color: rgba(17,100,102,0.15); background: var(--surface-2); }
+        .phd-card-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+        .phd-card-year { font-size: 0.68rem; color: var(--accent-bright); font-weight: 500; }
+        .phd-card-now { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+        @media (max-width: 768px) { .phd-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .phd-grid { grid-template-columns: 1fr; } }
+
+        /* RESPONSIVE TIMELINE */
+        @media (max-width: 900px) {
+            .timeline::before { left: 20px; }
+            .era-header { flex-direction: column; gap: 8px; }
+            .era-years { width: auto; text-align: left; padding-left: 40px; }
+            .era-title-block { padding-left: 40px; }
+            .era-title-block::before { left: -24px; }
+            .era-content { flex-direction: column; gap: 0; }
+            .era-spacer { display: none; }
+            .era-body { padding-left: 40px; }
+        }
+
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border); padding: 48px 40px; max-width: var(--max-w); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--text-muted); }
+        footer a { color: var(--text-secondary); text-decoration: none; transition: 0.2s; }
+        footer a:hover { color: var(--accent-bright); }
+        .footer-links { display: flex; gap: 24px; }
+        @media (max-width: 600px) {
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+            .page-hero, .timeline, .grants, .phd-tree, .prizes { padding-left: 20px; padding-right: 20px; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
+        .reveal.vis { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand"><span>Extreme</span> Photonics</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="research.html">Research</a></li>
+                <li><a href="journey.html" class="active">Journey</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="media.html">Media</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="page-hero-tag">Scientific Journey</div>
+        <h1>From Crete to the attosecond frontier</h1>
+        <p class="page-hero-intro">
+            Two decades building the experimental tools to see electrons move in real time &mdash;
+            from a research assistant in Heraklion to the generation of the shortest pulses of
+            light and electrons ever created.
+        </p>
+    </section>
+
+    <!-- PLACES -->
+    <section class="journey-map reveal">
+        <a class="journey-place" href="#crete">
+            <div class="journey-place-flag">&#127468;&#127479;</div>
+            <h3>Crete</h3>
+            <div class="journey-place-years">1995 &ndash; 2002</div>
+            <div class="journey-place-role">BSc, MSc &amp; Research<br>Univ. of Crete &amp; FORTH</div>
+        </a>
+        <a class="journey-place" href="#vienna">
+            <div class="journey-place-flag">&#127462;&#127481;</div>
+            <h3>Vienna</h3>
+            <div class="journey-place-years">2002 &ndash; 2005</div>
+            <div class="journey-place-role">PhD research<br>TU Wien &amp; LMU Munich</div>
+        </a>
+        <a class="journey-place" href="#munich">
+            <div class="journey-place-flag">&#127465;&#127466;</div>
+            <h3>Munich</h3>
+            <div class="journey-place-years">2005 &ndash; 2018</div>
+            <div class="journey-place-role">Group Leader &amp; Director<br>Max Planck / LMU</div>
+        </a>
+        <a class="journey-place" href="#korea">
+            <div class="journey-place-flag">&#127472;&#127479;</div>
+            <h3>Pohang</h3>
+            <div class="journey-place-years">2010 &ndash; 2016</div>
+            <div class="journey-place-role">Adjunct Professor<br>POSTECH</div>
+        </a>
+        <a class="journey-place" href="#rostock">
+            <div class="journey-place-flag">&#127465;&#127466;</div>
+            <h3>Rostock</h3>
+            <div class="journey-place-years">2018 &ndash; present</div>
+            <div class="journey-place-role">W3 Professor of Physics<br>University of Rostock</div>
+        </a>
+    </section>
+
+    <!-- PRIZES -->
+    <section class="prizes reveal">
+        <div class="prizes-tag">Honours &amp; Prizes</div>
+        <div class="prizes-grid">
+            <div class="prize-card">
+                <h3>Roentgen Prize</h3>
+                <div class="prize-card-org">Justus-Liebig-Universit&auml;t Gie&szlig;en</div>
+                <div class="prize-card-year">2015</div>
+            </div>
+            <div class="prize-card">
+                <h3>Gustav Hertz Prize</h3>
+                <div class="prize-card-org">Deutsche Physikalische Gesellschaft</div>
+                <div class="prize-card-year">2013</div>
+            </div>
+            <div class="prize-card">
+                <h3>IUPAP Prize in Optics</h3>
+                <div class="prize-card-org">International Commission of Optics</div>
+                <div class="prize-card-year">2009</div>
+            </div>
+            <div class="prize-card">
+                <h3>G. Foteinos Prize</h3>
+                <div class="prize-card-org">Academy of Athens &middot; Experimental Physics</div>
+                <div class="prize-card-year">2007</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline">
+
+        <!-- CRETE -->
+        <div class="timeline-era reveal" id="crete">
+            <div class="era-header">
+                <div class="era-years">1995&ndash;2002</div>
+                <div class="era-title-block">
+                    <div class="era-title">Crete &mdash; Where it began</div>
+                    <div class="era-subtitle">University of Crete &amp; IESL-FORTH, Heraklion, Greece</div>
+                </div>
+            </div>
+            <div class="era-content">
+                <div class="era-spacer"></div>
+                <div class="era-body">
+                    <p>
+                        BSc in Physics (2000) and MSc in Physics (2002) at the University of Crete.
+                        Research assistant at the Institute of Electronic Structure and Laser (IESL)
+                        at FORTH from 1999 &mdash; working on high-order harmonic generation and the
+                        development of kilohertz extreme-ultraviolet light sources. These early years
+                        in one of Greece's premier laser laboratories set the direction: ultrafast optics,
+                        attosecond phenomena, and the ambition to measure the unmeasurable.
+                    </p>
+                    <div class="era-highlights">
+                        <div class="era-chip">
+                            <strong>KHz EUV light source</strong>
+                            <span class="venue">Appl. Phys. B 73, 687 (2001)</span>
+                        </div>
+                        <div class="era-chip">
+                            <strong>Attosecond pulse characterisation</strong>
+                            <span class="venue">Appl. Phys. B 74, 197 (2002)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIENNA -->
+        <div class="timeline-era reveal" id="vienna">
+            <div class="era-header">
+                <div class="era-years">2002&ndash;2005</div>
+                <div class="era-title-block">
+                    <div class="era-title">Vienna &amp; Munich &mdash; Measuring light waves for the first time</div>
+                    <div class="era-subtitle">TU Wien &amp; LMU Munich &middot; PhD in Physics (LMU, 2005) &middot; Group of Ferenc Krausz</div>
+                </div>
+            </div>
+            <div class="era-content">
+                <div class="era-spacer"></div>
+                <div class="era-body">
+                    <p>
+                        Doctoral research with Ferenc Krausz, first at TU Wien and then at LMU Munich.
+                        During these years, the field of attosecond science was being born &mdash; and Eleftherios
+                        was at the centre. His PhD work achieved the first direct measurement of the
+                        electric field of a light wave, published in Science in 2004. The concept was
+                        dubbed "the oscilloscope of light waves" and opened the way to lightwave electronics.
+                    </p>
+                    <div class="era-highlights">
+                        <div class="era-chip">
+                            <strong>Direct measurement of light waves</strong>
+                            <span class="venue">Science 305, 1267 (2004)</span>
+                        </div>
+                        <div class="era-chip">
+                            <strong>Atomic Transient Recorder</strong>
+                            <span class="venue">Nature 427, 817 (2004)</span>
+                        </div>
+                        <div class="era-chip">
+                            <strong>Attosecond double-slit experiment</strong>
+                            <span class="venue">PRL 95, 040040 (2005)</span>
+                        </div>
+                        <div class="era-chip">
+                            <strong>Marie Curie Intra-European Fellowship</strong>
+                            <span class="venue">2005 &ndash; 2007</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MUNICH -->
+        <div class="timeline-era reveal" id="munich">
+            <div class="era-header">
+                <div class="era-years">2005&ndash;2018</div>
+                <div class="era-title-block">
+                    <div class="era-title">Munich &mdash; Building the synthesizer, rewriting the rules</div>
+                    <div class="era-subtitle">Max Planck Institute of Quantum Optics &middot; Team Leader, then Research Group Leader</div>
+                </div>
+            </div>
+            <div class="era-content">
+                <div class="era-spacer"></div>
+                <div class="era-body">
+                    <p>
+                        Thirteen years at the Max Planck Institute of Quantum Optics produced a cascade of
+                        firsts. As team leader and then independent research group leader, Eleftherios
+                        conceived and built the light-field synthesizer &mdash; the instrument that would become
+                        the foundation for all subsequent research. He also served as Coordinator of the
+                        Max Planck Centre of Attosecond Science (MPC-AS) and External Lecturer at LMU Munich.
+                    </p>
+                    <p>
+                        The breakthroughs came in rapid succession: single-cycle nonlinear optics (Science 2008),
+                        real-time observation of valence electron motion (Nature 2010), synthesized light
+                        transients (Science 2011), the first high-harmonic generation in bulk solids
+                        (Nature 2015), the optical attosecond pulse &mdash; the shortest controlled event
+                        of light ever created at 380 attoseconds (Nature 2016, Guinness World Record) &mdash;
+                        petahertz electronic metrology (Nature 2016), and soft X-ray excitonics (Science 2017).
+                    </p>
+                    <p>
+                        During this period three of the four major prizes were awarded: the G. Foteinos Prize
+                        from the Academy of Athens (2007), the IUPAP Prize in Optics (2009), and the Gustav
+                        Hertz Prize from the DPG (2013).
+                    </p>
+                    <div class="era-highlights">
+                        <div class="era-chip"><strong>Lightwave electronics</strong><span class="venue">Science 317, 769 (2007) &middot; Highly Cited</span></div>
+                        <div class="era-chip"><strong>Single-cycle nonlinear optics</strong><span class="venue">Science 320, 1614 (2008) &middot; Highly Cited</span></div>
+                        <div class="era-chip"><strong>Valence electron motion</strong><span class="venue">Nature 466, 739 (2010) &middot; Highly Cited</span></div>
+                        <div class="era-chip"><strong>Delay in photoemission</strong><span class="venue">Science 328, 1658 (2010) &middot; Highly Cited</span></div>
+                        <div class="era-chip"><strong>Synthesized light transients</strong><span class="venue">Science 334, 195 (2011) &middot; Highly Cited</span></div>
+                        <div class="era-chip"><strong>ERC Starting Grant</strong><span class="venue">&euro;1.3M &middot; 2010&ndash;2015</span></div>
+                        <div class="era-chip"><strong>HHG in bulk solids</strong><span class="venue">Nature 521, 498 (2015) &middot; Highly Cited</span></div>
+                        <div class="era-chip"><strong>Optical attosecond pulse</strong><span class="venue">Nature 530, 66 (2016) &middot; Guinness Record</span></div>
+                        <div class="era-chip"><strong>PHz electronic metrology</strong><span class="venue">Nature 538, 359 (2016) &middot; Highly Cited</span></div>
+                        <div class="era-chip"><strong>Soft X-ray excitonics</strong><span class="venue">Science 357, 1134 (2017)</span></div>
+                        <div class="era-chip"><strong>MPC-AS Coordinator</strong><span class="venue">Max Planck &amp; KAIST &middot; 2010&ndash;2016</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KOREA (parallel) -->
+        <div class="timeline-era reveal" id="korea">
+            <div class="era-header">
+                <div class="era-years">2010&ndash;2016</div>
+                <div class="era-title-block">
+                    <div class="era-title">Pohang &mdash; Attosecond science across the Pacific</div>
+                    <div class="era-subtitle">POSTECH &middot; Adjunct Professor of Physics &middot; MPC-AS partner</div>
+                </div>
+            </div>
+            <div class="era-content">
+                <div class="era-spacer"></div>
+                <div class="era-body">
+                    <p>
+                        In parallel with the Munich years, Eleftherios held an Adjunct Professorship at
+                        Pohang University of Science and Technology in South Korea, teaching the graduate
+                        course "Attosecond Physics: Tools and Techniques" and co-coordinating the Max Planck
+                        Centre of Attosecond Science. He also authored the book <em>Attosecond Photonics</em>
+                        (World Scientific, 2016) for graduate courses in ultrafast science.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROSTOCK -->
+        <div class="timeline-era reveal" id="rostock">
+            <div class="era-header">
+                <div class="era-years">2018&ndash;now</div>
+                <div class="era-title-block">
+                    <div class="era-title">Rostock &mdash; Extreme Photonics Labs</div>
+                    <div class="era-subtitle">W3 Professor of Physics &middot; Institute of Physics &middot; University of Rostock</div>
+                </div>
+            </div>
+            <div class="era-content">
+                <div class="era-spacer"></div>
+                <div class="era-body">
+                    <p>
+                        In August 2018, Eleftherios accepted a W3 Professorship at the University of Rostock,
+                        founding the Extreme Photonics Labs as a fully independent research group. New
+                        infrastructure was built from scratch, a new team assembled, and the scientific
+                        ambition expanded into condensed matter physics.
+                    </p>
+                    <p>
+                        The results have been transformative. Laser picoscopy was demonstrated in 2020 &mdash;
+                        the first real-space photographs of valence electrons in crystals. In 2023,
+                        attosecond electron pulses of just 53 attoseconds were generated from metallic
+                        nanotips, the shortest ever measured. An ERC Advanced Grant (&euro;2.5M) was awarded
+                        for ultrafast picoscopy of solids. The PHz spectroscopy programme resolved a
+                        decades-long debate about the insulator-to-metal transition in VO&#8322;. And the
+                        light-field synthesis platform was extended to Yb-based systems and into the
+                        mid-infrared at 2&nbsp;&mu;m via a DFG-funded OPCPA source.
+                    </p>
+                    <div class="era-highlights">
+                        <div class="era-chip"><strong>Laser picoscopy</strong><span class="venue">Nature 583, 55 (2020)</span></div>
+                        <div class="era-chip"><strong>Attosecond field emission &middot; 53 as</strong><span class="venue">Nature 613, 662 (2023)</span></div>
+                        <div class="era-chip"><strong>ERC Advanced Grant ULPIS</strong><span class="venue">&euro;2.5M &middot; 2023&ndash;2028</span></div>
+                        <div class="era-chip"><strong>CRC LiMatI &middot; S02 &amp; S05</strong><span class="venue">DFG &middot; 2022&ndash;2025</span></div>
+                        <div class="era-chip"><strong>DFG Major Instrumentation</strong><span class="venue">&euro;599k &middot; Mid-IR OPCPA</span></div>
+                        <div class="era-chip"><strong>Roentgen Prize</strong><span class="venue">Justus-Liebig-Universit&auml;t &middot; 2015</span></div>
+                        <div class="era-chip"><strong>Near-field electron stripes</strong><span class="venue">Nature Physics (2025)</span></div>
+                        <div class="era-chip"><strong>Single-cycle Yb compression</strong><span class="venue">Optica 12, 296 (2025)</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- NUMBERS -->
+    <section class="numbers-bar reveal">
+        <div class="numbers-bar-inner">
+            <div class="nb-item"><div class="nb-val">67</div><div class="nb-label">Publications</div></div>
+            <div class="nb-item"><div class="nb-val">7+6</div><div class="nb-label">Nature + Science</div></div>
+            <div class="nb-item"><div class="nb-val">17,200+</div><div class="nb-label">Citations</div></div>
+            <div class="nb-item"><div class="nb-val">39</div><div class="nb-label">h-index</div></div>
+            <div class="nb-item"><div class="nb-val">9</div><div class="nb-label">PhD graduates</div></div>
+            <div class="nb-item"><div class="nb-val">52+</div><div class="nb-label">Invited talks</div></div>
+            <div class="nb-item"><div class="nb-val">4</div><div class="nb-label">Prizes</div></div>
+        </div>
+    </section>
+
+    <!-- GRANTS -->
+    <section class="grants reveal">
+        <div class="grants-tag">Research Funding</div>
+        <h2>Major grants &amp; funded programmes</h2>
+        <div class="grants-grid">
+            <div class="grant-card">
+                <div class="grant-card-source">European Research Council</div>
+                <h3>ERC Advanced Grant &mdash; ULPIS</h3>
+                <div class="grant-card-amount">&euro;2,499,050</div>
+                <div class="grant-card-meta">2023&ndash;2028 &middot; PI</div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-card-source">European Research Council</div>
+                <h3>ERC Starting Grant</h3>
+                <div class="grant-card-amount">&euro;1,300,000</div>
+                <div class="grant-card-meta">2010&ndash;2015 &middot; PI</div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-card-source">DFG</div>
+                <h3>CRC LiMatI &mdash; S02 &amp; S05</h3>
+                <div class="grant-card-amount">~&euro;649,000</div>
+                <div class="grant-card-meta">2022&ndash;2025 &middot; co-PI</div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-card-source">DFG</div>
+                <h3>Major Research Instrumentation</h3>
+                <div class="grant-card-amount">&euro;599,000</div>
+                <div class="grant-card-meta">Mid-IR OPCPA &middot; PI</div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-card-source">Munich Cluster of Excellence</div>
+                <h3>MAP &mdash; Advanced Photonics</h3>
+                <div class="grant-card-amount">~&euro;600,000</div>
+                <div class="grant-card-meta">2006&ndash;2016 &middot; PI &amp; co-PI</div>
+            </div>
+            <div class="grant-card">
+                <div class="grant-card-source">European Commission</div>
+                <h3>ATTOFEL, Marie Curie &amp; ERC PoC</h3>
+                <div class="grant-card-amount">~&euro;495,000</div>
+                <div class="grant-card-meta">Training networks &amp; fellowships &middot; PI</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHD TREE -->
+    <section class="phd-tree reveal">
+        <div class="phd-tree-tag">Mentorship</div>
+        <h2>PhD graduates</h2>
+        <p class="phd-tree-intro">
+            Nine doctoral students supervised to completion across MPQ and the University of Rostock.
+            Three now hold independent academic positions.
+        </p>
+        <div class="phd-grid">
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Adrian Wirth</div>
+                <div class="phd-card-year">PhD 2011 &middot; MPQ</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Mohammed T. Hassan</div>
+                <div class="phd-card-year">PhD 2013 &middot; MPQ</div>
+                <div class="phd-card-now">Associate Professor, Arizona State University</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Tran Trung Luu</div>
+                <div class="phd-card-year">PhD 2015 &middot; MPQ</div>
+                <div class="phd-card-now">Assistant Professor, University of Hong Kong</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Antoine Moulet</div>
+                <div class="phd-card-year">PhD 2017 &middot; MPQ</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Manish Garg</div>
+                <div class="phd-card-year">PhD 2017 &middot; MPQ</div>
+                <div class="phd-card-now">Senior Researcher, MPI Solid State Research</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Harshit Lakhotia</div>
+                <div class="phd-card-year">PhD 2021 &middot; Rostock</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Hee-Yong Kim</div>
+                <div class="phd-card-year">PhD 2023 &middot; Rostock</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">Dr. Santanu Mandal</div>
+                <div class="phd-card-year">PhD 2025 &middot; Rostock</div>
+            </div>
+            <div class="phd-card">
+                <div class="phd-card-name">+ 3 MSc, 6 BSc</div>
+                <div class="phd-card-year">2010&ndash;present</div>
+                <div class="phd-card-now">5 postdocs supervised (+ 1 current)</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>&copy; 2026 Extreme Photonics Labs &middot; Eleftherios Goulielmakis</span>
+        <div class="footer-links">
+            <a href="https://scholar.google.de/citations?user=z7k9lSAAAAAJ" target="_blank">Google Scholar</a>
+            <a href="https://www.uni-rostock.de" target="_blank">Uni Rostock</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+
+</body>
+</html>

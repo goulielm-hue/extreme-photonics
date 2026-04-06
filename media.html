@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media & Press — Extreme Photonics Labs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #2C3531;
+            --surface: #344039;
+            --surface-2: #3D4A43;
+            --text: #D1E8E2;
+            --text-secondary: #D9B08C;
+            --text-muted: #7A9A8E;
+            --accent: #116466;
+            --accent-glow: rgba(17,100,102,0.25);
+            --border: rgba(209,232,226,0.12);
+            --accent-bright: #FFCB9A;
+            --sans: 'Inter', -apple-system, sans-serif;
+            --serif: 'Source Serif 4', Georgia, serif;
+            --max-w: 1200px;
+            --nav-h: 64px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+        /* NAV */
+        nav { position: fixed; top:0; left:0; right:0; height: var(--nav-h); z-index:100; background: rgba(44,53,49,0.85); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: var(--max-w); margin:0 auto; padding:0 40px; height:100%; display:flex; align-items:center; justify-content:space-between; }
+        .nav-brand { font-weight:600; font-size:0.95rem; color:var(--text); text-decoration:none; }
+        .nav-brand span { color: var(--accent-bright); }
+        .nav-links { display:flex; gap:4px; list-style:none; }
+        .nav-links a { color:var(--text-muted); text-decoration:none; font-size:0.82rem; font-weight:500; padding:6px 14px; border-radius:6px; transition:0.2s; }
+        .nav-links a:hover, .nav-links a.active { color:var(--text); background:var(--accent-glow); }
+        .ham { display:none; cursor:pointer; padding:8px; background:none; border:none; }
+        .ham span { display:block; width:20px; height:1.5px; background:var(--text-secondary); margin:4px 0; }
+        @media(max-width:768px) {
+            .nav-links { display:none; }
+            .nav-links.open { display:flex; flex-direction:column; position:absolute; top:var(--nav-h); left:0; right:0; background:var(--surface); border-bottom:1px solid var(--border); padding:12px 20px; }
+            .ham { display:block; }
+        }
+
+        /* PAGE TOP */
+        .page-top {
+            padding: calc(var(--nav-h) + 80px) 40px 0;
+            max-width: var(--max-w); margin: 0 auto;
+            text-align: center;
+        }
+        .page-top h1 {
+            font-family: var(--serif);
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+        .page-top .lead {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* LOGO WALL */
+        .logo-wall {
+            max-width: var(--max-w); margin: 56px auto 0;
+            padding: 0 40px;
+        }
+        .logo-wall-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo-pill {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            transition: color 0.3s;
+            cursor: default;
+        }
+        .logo-pill:hover { color: var(--text); }
+        .logo-pill.tier1 { font-size: 1.1rem; color: var(--text-secondary); }
+        .logo-pill.tier1:hover { color: #fff; }
+
+        /* FEATURED STORIES — the centerpiece */
+        .featured {
+            max-width: var(--max-w); margin: 0 auto;
+            padding: 80px 40px;
+        }
+        .featured-label {
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--accent-bright); margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-bottom: 80px;
+            padding-bottom: 80px;
+            border-bottom: 1px solid var(--border);
+        }
+        .story:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .story.reverse { direction: rtl; }
+        .story.reverse > * { direction: ltr; }
+
+        .story-img {
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 3/2;
+            background: var(--surface);
+        }
+        .story-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .story-text {}
+        .story-outlet {
+            font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+        .story-outlet.nature { color: #F87171; }
+        .story-outlet.science { color: #FBBF24; }
+        .story-outlet.guinness { color: #34D399; }
+        .story-outlet.economist { color: #FB923C; }
+        .story-outlet.newscientist { color: #60A5FA; }
+
+        .story-headline {
+            font-family: var(--serif);
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+            margin-bottom: 16px;
+        }
+        .story p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 16px;
+        }
+        .story-year {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        @media(max-width:768px) {
+            .story, .story.reverse { grid-template-columns: 1fr; gap: 24px; direction: ltr; }
+        }
+
+        /* HEADLINE STREAM */
+        .stream {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 40px;
+        }
+        .stream-inner {
+            max-width: var(--max-w); margin: 0 auto;
+        }
+        .stream-label {
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--accent-bright); margin-bottom: 48px;
+            text-align: center;
+        }
+        .stream-columns {
+            columns: 2;
+            column-gap: 48px;
+        }
+        .stream-item {
+            break-inside: avoid;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+        }
+        .stream-item-year {
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            width: 36px;
+        }
+        .stream-item-body {
+            flex: 1;
+        }
+        .stream-item-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 3px;
+        }
+        .stream-item-outlet {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+        .stream-item-outlet strong {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        .stream-item-flag {
+            font-size: 0.72rem;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: var(--surface-2);
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        @media(max-width:768px) {
+            .stream-columns { columns: 1; }
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 40px;
+            max-width: var(--max-w); margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.78rem; color: var(--text-muted);
+        }
+        footer a { color: var(--text-secondary); text-decoration:none; }
+        footer a:hover { color: var(--accent-bright); }
+        .footer-links { display: flex; gap: 24px; }
+
+        /* REVEAL */
+        .reveal { opacity:0; transform:translateY(20px); transition:all 0.6s ease; }
+        .reveal.vis { opacity:1; transform:translateY(0); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand"><span>Extreme</span> Photonics</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="research.html">Research</a></li>
+                <li><a href="journey.html">Journey</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="media.html" class="active">Media</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="ham" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <header class="page-top reveal">
+        <h1>In the press</h1>
+        <p class="lead">From Nature and Science to The Economist and Guinness World Records — two decades of work that reached beyond the laboratory.</p>
+    </header>
+
+    <!-- LOGO WALL — instant credibility -->
+    <div class="logo-wall reveal">
+        <div class="logo-wall-inner">
+            <span class="logo-pill tier1">Nature</span>
+            <span class="logo-pill tier1">Science</span>
+            <span class="logo-pill tier1">Nature Photonics</span>
+            <span class="logo-pill">New Scientist</span>
+            <span class="logo-pill">The Economist</span>
+            <span class="logo-pill">Physics World</span>
+            <span class="logo-pill">Physics Today</span>
+            <span class="logo-pill tier1">Guinness World Records</span>
+            <span class="logo-pill">Laser Focus World</span>
+            <span class="logo-pill">Chemical &amp; Engineering News</span>
+            <span class="logo-pill">Kathimerini</span>
+            <span class="logo-pill">Suddeutsche Zeitung</span>
+            <span class="logo-pill">The Times of India</span>
+        </div>
+    </div>
+
+    <!-- FEATURED STORIES — the real impact -->
+    <section class="featured">
+        <div class="featured-label reveal">Featured coverage</div>
+
+        <!-- Story 1: Attosecond field emission -->
+        <div class="story reveal">
+            <div class="story-img">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/Alle_MNF/Physik_Xplab/Fotos/img1.png" alt="Attosecond field emission">
+            </div>
+            <div class="story-text">
+                <div class="story-outlet nature">Nature &middot; Physics World &middot; Phys.org</div>
+                <h2 class="story-headline">The shortest electron pulse ever created</h2>
+                <p>In 2023, the generation of 53-attosecond electron pulses from a metallic nanotip was covered across the scientific press — from Nature to Physics World, Interesting Engineering, and media in Greece, Brazil, and Korea.</p>
+                <div class="story-year">January 2023 &middot; Nature 613, 662</div>
+            </div>
+        </div>
+
+        <!-- Story 2: Laser Picoscopy -->
+        <div class="story reverse reveal">
+            <div class="story-img">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/Alle_MNF/Physik_Xplab/Fotos/CoverPhoto_Hochformat_v3_wBackground.png" alt="Laser picoscopy">
+            </div>
+            <div class="story-text">
+                <div class="story-outlet nature">Nature &middot; EurekAlert &middot; Physics Today</div>
+                <h2 class="story-headline">Laser takes pictures of electrons in crystals</h2>
+                <p>The first real-space images of valence electrons in solids. Michael Sentef wrote in Nature that the work opens entirely new possibilities for understanding chemical bonding. Covered by AAAS, Physics Today, and press in Germany, Greece, and Brazil.</p>
+                <div class="story-year">July 2020 &middot; Nature 583, 55</div>
+            </div>
+        </div>
+
+        <!-- Story 3: Optical attosecond pulse / Guinness -->
+        <div class="story reveal">
+            <div class="story-img">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/Alle_MNF/Physik_Xplab/Fotos/news1.png" alt="Optical attosecond pulse">
+            </div>
+            <div class="story-text">
+                <div class="story-outlet guinness">Guinness World Records &middot; Nature &middot; New Scientist</div>
+                <h2 class="story-headline">Shortest pulse of visible light: 380 attoseconds</h2>
+                <p>The optical attosecond pulse entered the Guinness Book of World Records and was named in Laser Focus World's top 20 photonics breakthroughs of 2016. Two Nature News &amp; Views, New Scientist, Physics Today, and media worldwide.</p>
+                <div class="story-year">2016 &middot; Nature 530, 66 &amp; Nature 538, 359</div>
+            </div>
+        </div>
+
+        <!-- Story 4: Real-time electron motion -->
+        <div class="story reverse reveal">
+            <div class="story-img">
+                <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/d/8/csm_excitonics_716ab99686.png" alt="Electron motion">
+            </div>
+            <div class="story-text">
+                <div class="story-outlet economist">The Economist &middot; Nature &middot; New Scientist</div>
+                <h2 class="story-headline">Watching electrons move in real time</h2>
+                <p>The Economist profiled the work as a landmark in physics. Olga Smirnova wrote in Nature about the implications. The first direct measurement of light waves in 2004 had already made headlines in Laser Focus World and OE Magazine — launching two decades of press coverage.</p>
+                <div class="story-year">2004 &ndash; 2010 &middot; Science 305, 1267 &amp; Nature 466, 739</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEADLINE STREAM — everything, chronological, compact -->
+    <section class="stream">
+        <div class="stream-inner">
+            <div class="stream-label reveal">Complete press archive</div>
+            <div class="stream-columns reveal">
+
+                <div class="stream-item">
+                    <div class="stream-item-year">2024</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Sub-cycle photonics in correlated materials</div>
+                        <div class="stream-item-outlet"><strong>Nature Photonics</strong> &middot; News &amp; Views</div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2024</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">The physicist from Crete who excels internationally</div>
+                        <div class="stream-item-outlet"><strong>Patris News</strong><span class="stream-item-flag">GR</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2023</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Attosecond electron pulses claimed as shortest ever</div>
+                        <div class="stream-item-outlet"><strong>Physics World</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2023</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Researchers broke the record for the shortest pulse of electrons</div>
+                        <div class="stream-item-outlet"><strong>Interesting Engineering</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2023</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Electrons in the fast lane</div>
+                        <div class="stream-item-outlet"><strong>Universitat Rostock</strong><span class="stream-item-flag">DE</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2023</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Greek contribution to attophysics</div>
+                        <div class="stream-item-outlet"><strong>Efimerida ton Syntakton</strong><span class="stream-item-flag">GR</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2023</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Pulso de eletrons mais curto ja criado</div>
+                        <div class="stream-item-outlet"><strong>Inovacao Tecnologica</strong><span class="stream-item-flag">BR</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2020</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Atomic forces mapped out by lasers</div>
+                        <div class="stream-item-outlet"><strong>Nature</strong> &middot; News &amp; Views</div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2020</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Laser takes pictures of electrons in crystals</div>
+                        <div class="stream-item-outlet"><strong>EurekAlert / AAAS</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2020</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Intense laser jiggles valence electrons</div>
+                        <div class="stream-item-outlet"><strong>Physics Today</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2020</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Microscopio com laser tira foto de eletrons</div>
+                        <div class="stream-item-outlet"><strong>Olhar Digital</strong><span class="stream-item-flag">BR</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2017</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Ultrafast lasers catch electrons relaxing after brief excitement</div>
+                        <div class="stream-item-outlet"><strong>New Scientist</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Shortest pulse of visible light</div>
+                        <div class="stream-item-outlet"><strong>Guinness World Records</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Speedy electrons exposed in a flash</div>
+                        <div class="stream-item-outlet"><strong>Nature</strong> &middot; News &amp; Views</div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Ultrashort light pulses shake atoms</div>
+                        <div class="stream-item-outlet"><strong>Nature</strong> &middot; News &amp; Views</div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Top 20 photonics technology picks for 2016</div>
+                        <div class="stream-item-outlet"><strong>Laser Focus World</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Shortest ever pulse of visible light spots photons fleeing atoms</div>
+                        <div class="stream-item-outlet"><strong>New Scientist</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Computer werden Millionen Mal schneller</div>
+                        <div class="stream-item-outlet"><strong>Ingenieur.de</strong><span class="stream-item-flag">DE</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Made in Greece: Creating the computer of the future</div>
+                        <div class="stream-item-outlet"><strong>Erinika</strong><span class="stream-item-flag">GR</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Here comes fastest ever electric current</div>
+                        <div class="stream-item-outlet"><strong>ANI / Deccan Herald</strong><span class="stream-item-flag">IN</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2016</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Electronica acelerada mediante luz</div>
+                        <div class="stream-item-outlet"><strong>Noticias de la Ciencia</strong><span class="stream-item-flag">ES</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2015</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">To the extreme</div>
+                        <div class="stream-item-outlet"><strong>Nature</strong> &middot; News &amp; Views</div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2015</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">The inventive physicist of Max Planck</div>
+                        <div class="stream-item-outlet"><strong>Kathimerini</strong><span class="stream-item-flag">GR</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2015</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Young scientist paves way for new era of electronics</div>
+                        <div class="stream-item-outlet"><strong>The Times of India</strong><span class="stream-item-flag">IN</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2012</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Fast-paced photonics</div>
+                        <div class="stream-item-outlet"><strong>Nature Photonics</strong> &middot; News &amp; Views</div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2011</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Light Pulses Get Shorter</div>
+                        <div class="stream-item-outlet"><strong>Chemical &amp; Engineering News</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2011</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Lichtblitze bandigen Elektronen</div>
+                        <div class="stream-item-outlet"><strong>Hamburger Abendblatt</strong><span class="stream-item-flag">DE</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2010</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Attosecond prints of electrons</div>
+                        <div class="stream-item-outlet"><strong>Nature</strong> &middot; News &amp; Views</div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2010</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Exciting electrons</div>
+                        <div class="stream-item-outlet"><strong>The Economist</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2008</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Fastest flashgun captures image of light wave</div>
+                        <div class="stream-item-outlet"><strong>New Scientist</strong></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2008</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Weniger als 0,0000000000000001 Sekunden</div>
+                        <div class="stream-item-outlet"><strong>Suddeutsche Zeitung</strong><span class="stream-item-flag">DE</span></div>
+                    </div>
+                </div>
+                <div class="stream-item">
+                    <div class="stream-item-year">2004</div>
+                    <div class="stream-item-body">
+                        <div class="stream-item-title">Oscilloscope rendering of light is achieved</div>
+                        <div class="stream-item-outlet"><strong>Laser Focus World</strong></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>&copy; 2026 Extreme Photonics Labs &middot; Eleftherios Goulielmakis</span>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research — Extreme Photonics Labs</title>
+    <meta name="description" content="Research programme of Extreme Photonics Labs: light-field synthesis, dynamic picoscopy, strong-field nanooptics, and PHz spectroscopy of quantum phase transitions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #2C3531;
+            --surface: #344039;
+            --surface-2: #3D4A43;
+            --text: #D1E8E2;
+            --text-secondary: #D9B08C;
+            --text-muted: #7A9A8E;
+            --accent: #116466;
+            --accent-glow: rgba(17,100,102,0.25);
+            --border: rgba(209,232,226,0.12);
+            --accent-bright: #FFCB9A;
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-serif: 'Source Serif 4', Georgia, serif;
+            --max-w: 1200px;
+            --nav-h: 64px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--nav-h);
+            z-index: 100;
+            background: rgba(44,53,49,0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+        .nav-brand span { color: var(--accent-bright); }
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--text); background: var(--accent-glow); }
+        .nav-hamburger {
+            display: none; cursor: pointer; padding: 8px;
+            background: none; border: none;
+        }
+        .nav-hamburger span {
+            display: block; width: 20px; height: 1.5px;
+            background: var(--text-secondary); margin: 4px 0;
+            border-radius: 2px; transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column;
+                position: absolute; top: var(--nav-h); left: 0; right: 0;
+                background: var(--surface); border-bottom: 1px solid var(--border);
+                padding: 12px 20px;
+            }
+            .nav-hamburger { display: block; }
+        }
+
+        /* ===== PAGE HERO ===== */
+        .page-hero {
+            padding: calc(var(--nav-h) + 80px) 40px 80px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            position: relative;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 400px;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(17,100,102,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(167,139,250,0.04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .page-hero-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-bright);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .page-hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .page-hero-intro {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 720px;
+            line-height: 1.85;
+            position: relative;
+        }
+
+        /* ===== OVERVIEW PILLARS ===== */
+        .pillars {
+            padding: 0 40px 80px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .pillar {
+            background: var(--surface);
+            padding: 32px 24px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .pillar:hover { background: var(--surface-2); }
+        .pillar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-bright), #A78BFA);
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .pillar:hover::before { opacity: 1; }
+        .pillar-num {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, #116466, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        .pillar h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .pillar p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 520px) {
+            .pillars-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== RESEARCH DIRECTION SECTIONS ===== */
+        .rd {
+            padding: 100px 40px;
+            border-top: 1px solid var(--border);
+        }
+        .rd-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+        .rd:nth-child(even) .rd-inner {
+            direction: rtl;
+        }
+        .rd:nth-child(even) .rd-inner > * {
+            direction: ltr;
+        }
+        .rd-tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-bright);
+            margin-bottom: 12px;
+        }
+        .rd h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .rd-body {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.85;
+        }
+        .rd-body p { margin-bottom: 16px; }
+        .rd-body p:last-child { margin-bottom: 0; }
+
+        .rd-milestones {
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .rd-milestone {
+            display: flex;
+            gap: 16px;
+            align-items: baseline;
+        }
+        .rd-milestone-year {
+            flex-shrink: 0;
+            width: 52px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--accent-bright);
+            text-align: right;
+        }
+        .rd-milestone-text {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .rd-milestone-text strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .rd-visual {
+            position: relative;
+        }
+        .rd-visual-img {
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        .rd-visual-img img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.85);
+            transition: 0.5s;
+        }
+        .rd-visual-img:hover img {
+            filter: brightness(1);
+            transform: scale(1.02);
+        }
+        .rd-visual-caption {
+            margin-top: 12px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .rd-stat-row {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+        }
+        .rd-stat {
+            text-align: left;
+        }
+        .rd-stat-val {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, #116466, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .rd-stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .rd-inner { grid-template-columns: 1fr; gap: 40px; }
+            .rd:nth-child(even) .rd-inner { direction: ltr; }
+        }
+
+        /* ===== TEACHING SECTION ===== */
+        .teaching {
+            padding: 100px 40px;
+            border-top: 1px solid var(--border);
+        }
+        .teaching-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+        }
+        .teaching-tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-bright);
+            margin-bottom: 12px;
+        }
+        .teaching-inner h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .teaching-intro {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.85;
+            max-width: 680px;
+            margin-bottom: 48px;
+        }
+        .teaching-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .teaching-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 24px;
+            transition: all 0.3s;
+        }
+        .teaching-card:hover {
+            border-color: rgba(17,100,102,0.15);
+            background: var(--surface-2);
+        }
+        .teaching-card-level {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-bright);
+            margin-bottom: 8px;
+        }
+        .teaching-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .teaching-card p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .teaching-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 40px;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        footer a:hover { color: var(--accent-bright); }
+        .footer-links { display: flex; gap: 24px; }
+
+        @media (max-width: 600px) {
+            footer { flex-direction: column; gap: 16px; text-align: center; }
+            .page-hero { padding-left: 20px; padding-right: 20px; }
+            .pillars { padding-left: 20px; padding-right: 20px; }
+            .rd { padding-left: 20px; padding-right: 20px; }
+            .teaching { padding-left: 20px; padding-right: 20px; }
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: all 0.7s ease;
+        }
+        .reveal.vis { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand"><span>Extreme</span> Photonics</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="research.html" class="active">Research</a></li>
+                <li><a href="journey.html">Journey</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="media.html">Media</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-tag">Research Programme</div>
+        <h1>Four directions at the frontier of light and matter</h1>
+        <p class="page-hero-intro">
+            We develop experimental methods in which atomic spatial resolution and attosecond temporal resolution
+            co-emerge from the interaction of intense, precisely shaped laser fields with matter.
+            The foundation is light-field synthesis — the ability to control multi-octave optical spectra
+            on sub-cycle time scales — deployed across four interconnected research directions.
+        </p>
+    </section>
+
+    <!-- OVERVIEW PILLARS -->
+    <section class="pillars reveal">
+        <div class="pillars-grid">
+            <a class="pillar" href="#synthesis" style="text-decoration:none;color:inherit;">
+                <div class="pillar-num">01</div>
+                <h3>Light-Field Synthesis</h3>
+                <p>Sub-cycle waveform control across multi-octave bandwidths. The enabling technology.</p>
+            </a>
+            <a class="pillar" href="#picoscopy" style="text-decoration:none;color:inherit;">
+                <div class="pillar-num">02</div>
+                <h3>Dynamic Picoscopy</h3>
+                <p>Photographing valence electrons in crystals with sub-angstrom resolution.</p>
+            </a>
+            <a class="pillar" href="#nanooptics" style="text-decoration:none;color:inherit;">
+                <div class="pillar-num">03</div>
+                <h3>Strong-Field Nanooptics</h3>
+                <p>Attosecond electron emission and recollision at metallic nanostructures.</p>
+            </a>
+            <a class="pillar" href="#phz" style="text-decoration:none;color:inherit;">
+                <div class="pillar-num">04</div>
+                <h3>PHz Spectroscopy</h3>
+                <p>Phase-resolved probing of quantum phase transitions in correlated matter.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- DIRECTION 1: LIGHT-FIELD SYNTHESIS -->
+    <section class="rd reveal" id="synthesis">
+        <div class="rd-inner">
+            <div class="rd-content">
+                <div class="rd-tag">Direction 01 &middot; Enabling Technology</div>
+                <h2>Light-Field Synthesis &amp; Attosecond Metrology</h2>
+                <div class="rd-body">
+                    <p>
+                        Probing and manipulating matter on the native time scale of electrons demands
+                        control of light fields with sub-cycle precision — temporal resolution finer than their
+                        own oscillation period. The light-field synthesizer, developed in our group over more than
+                        a decade, divides a multi-octave coherent spectrum into independently controlled spectral
+                        channels that are recombined into a single, precisely sculpted waveform.
+                    </p>
+                    <p>
+                        The platform is now being extended from Ti:Sapphire to Yb-based laser systems for higher
+                        average power, and into the mid-infrared at 2&nbsp;&mu;m — opening extreme nonlinear optics
+                        to correlated oxides, topological insulators, and other quantum materials whose bandgaps
+                        were previously inaccessible.
+                    </p>
+                </div>
+                <div class="rd-milestones">
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2011</div>
+                        <div class="rd-milestone-text"><strong>Synthesized light transients</strong> — first waveforms controllable on sub-cycle time scales. <em>Science 334, 195</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2016</div>
+                        <div class="rd-milestone-text"><strong>Optical attosecond pulse</strong> — the shortest light ever generated: 380 as. Guinness World Record. <em>Nature 530, 66</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2025</div>
+                        <div class="rd-milestone-text"><strong>Single-cycle Yb compression</strong> — one-stage hollow-core fibre scheme reaching single-cycle regime. <em>Optica 12, 296</em></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rd-visual">
+                <div class="rd-visual-img">
+                    <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/f/d/csm_Synthesizer_of_light_5fa35e1533.jpg" alt="The light-field synthesizer" loading="lazy">
+                </div>
+                <p class="rd-visual-caption">The light-field synthesizer apparatus — multi-octave waveform control at the sub-cycle level.</p>
+                <div class="rd-stat-row">
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">380 as</div>
+                        <div class="rd-stat-label">Shortest optical pulse</div>
+                    </div>
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">&gt;3 octaves</div>
+                        <div class="rd-stat-label">Spectral bandwidth</div>
+                    </div>
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">10<sup style="font-size:0.6em;">14</sup> W/cm&sup2;</div>
+                        <div class="rd-stat-label">Peak intensity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIRECTION 2: DYNAMIC PICOSCOPY -->
+    <section class="rd reveal" id="picoscopy">
+        <div class="rd-inner">
+            <div class="rd-content">
+                <div class="rd-tag">Direction 02 &middot; ERC Advanced Grant</div>
+                <h2>Dynamic Picoscopy — Photographing the Chemical Bond</h2>
+                <div class="rd-body">
+                    <p>
+                        When an intense laser pulse drives a crystalline solid into the extreme nonlinear regime, the
+                        emitted high harmonics encode the structure factors of the valence crystal potential. Inverting
+                        this relationship yields real-space maps of the valence electron density at sub-angstrom
+                        resolution — we call this technique <em>Laser Picoscopy</em>.
+                    </p>
+                    <p>
+                        Unlike X-ray diffraction, which scatters off the total electron density, picoscopy is
+                        selectively sensitive to the valence electrons that govern chemical reactivity, electrical
+                        transport, and optical response. The ERC Advanced Grant ULPIS now extends picoscopy
+                        to three-dimensional imaging, structurally sensitive measurements under external stimuli,
+                        and real-time movies of electron and atomic motion across quantum phase transitions.
+                    </p>
+                </div>
+                <div class="rd-milestones">
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2015</div>
+                        <div class="rd-milestone-text"><strong>HHG in bulk solids</strong> — first demonstration in an optically-driven dielectric. <em>Nature 521, 498</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2016</div>
+                        <div class="rd-milestone-text"><strong>PHz electronic metrology</strong> — measuring multi-PHz light-induced currents in solids. <em>Nature 538, 359</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2017</div>
+                        <div class="rd-milestone-text"><strong>Soft X-ray excitonics</strong> — real-time tracking of core-hole coherences. <em>Science 357, 1134</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2020</div>
+                        <div class="rd-milestone-text"><strong>Laser picoscopy</strong> — first real-space pictures of valence electron distributions in MgF&#8322; and CaF&#8322;. <em>Nature 583, 55</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2023</div>
+                        <div class="rd-milestone-text"><strong>ERC Advanced Grant ULPIS</strong> — &euro;2.5M for ultrafast picoscopy of solids, 2023&ndash;2028.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="rd-visual">
+                <div class="rd-visual-img">
+                    <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/1/7/csm_MultiPHz_Electronics12_5314e7a9d8.jpg" alt="Dynamic picoscopy and high-harmonic generation in solids" loading="lazy">
+                </div>
+                <p class="rd-visual-caption">Visualising valence electron distributions in crystalline solids through laser picoscopy.</p>
+                <div class="rd-stat-row">
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">&lt;1 &#x212B;</div>
+                        <div class="rd-stat-label">Spatial resolution</div>
+                    </div>
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">&euro;2.5M</div>
+                        <div class="rd-stat-label">ERC Advanced Grant</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIRECTION 3: STRONG-FIELD NANOOPTICS -->
+    <section class="rd reveal" id="nanooptics">
+        <div class="rd-inner">
+            <div class="rd-content">
+                <div class="rd-tag">Direction 03 &middot; Nature 2023</div>
+                <h2>Strong-Field Nanooptics — Attosecond Electrons from Nanotips</h2>
+                <div class="rd-body">
+                    <p>
+                        At metallic nanostructures, geometric field enhancement concentrates the driving laser
+                        field to strengths comparable to atomic binding fields within a volume of a few cubic
+                        nanometres. This introduces qualitatively new physics: the quenching of electron quiver
+                        motion, steep ponderomotive gradients, and the confinement of electron emission and
+                        recollision to sub-cycle time windows far shorter than in the gas phase.
+                    </p>
+                    <p>
+                        Using our homochromatic attosecond streaking (HAS) technique, we achieved the first
+                        generation and complete temporal characterisation of isolated attosecond electron pulses
+                        from a solid-state nanostructure — recovering the shortest electron pulse ever measured.
+                        The programme is now advancing toward light-induced electron diffraction from crystalline
+                        nanotips, targeting atomic-scale structural imaging at surfaces.
+                    </p>
+                </div>
+                <div class="rd-milestones">
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2023</div>
+                        <div class="rd-milestone-text"><strong>Attosecond field emission</strong> — 53&nbsp;as electron pulse from a tungsten nanotip. <em>Nature 613, 662</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2025</div>
+                        <div class="rd-milestone-text"><strong>CEP-independent field sampling</strong> — all-solid-state optical metrology. <em>Opt. Lett. 50, 1093</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2025</div>
+                        <div class="rd-milestone-text"><strong>Near-field electron stripes</strong> — new metrological signatures of sub-cycle nanoscale dynamics. <em>Nature Physics</em></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rd-visual">
+                <div class="rd-visual-img">
+                    <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/Alle_MNF/Physik_Xplab/Fotos/img1.png" alt="Attosecond electron emission from a nanotip" loading="lazy">
+                </div>
+                <p class="rd-visual-caption">Attosecond electron emission from a metallic nanotip driven by waveform-controlled few-cycle pulses.</p>
+                <div class="rd-stat-row">
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">53 as</div>
+                        <div class="rd-stat-label">Shortest electron pulse</div>
+                    </div>
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">~nm&sup3;</div>
+                        <div class="rd-stat-label">Interaction volume</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIRECTION 4: PHz SPECTROSCOPY -->
+    <section class="rd reveal" id="phz">
+        <div class="rd-inner">
+            <div class="rd-content">
+                <div class="rd-tag">Direction 04 &middot; CRC LiMatI</div>
+                <h2>PHz Spectroscopy of Quantum Phase Transitions</h2>
+                <div class="rd-body">
+                    <p>
+                        Conventional narrow-band spectroscopies cannot unambiguously identify the onset
+                        of a metallic phase — photoexcited carriers in the insulating state mimic genuine
+                        metallisation. Our PHz phase-resolved spectroscopy uses single-cycle light transients
+                        with super-octave bandwidth to identify the nascent metallic phase through its intrinsic
+                        free-carrier plasma edge — a broadband, model-independent marker that narrow-band
+                        probes cannot access.
+                    </p>
+                    <p>
+                        Applied to vanadium dioxide, this framework resolved a decades-long mechanistic
+                        debate about the insulator-to-metal transition, revealing that the transition is
+                        rate-limited by anharmonic lattice dynamics rather than instantaneous electronic
+                        switching. At the sub-cycle frontier, we perform attosecond transient-reflectivity
+                        spectroscopy of Mott-insulating systems, accessing a new class of multi-dimensional
+                        experiments with sub-femtosecond precision.
+                    </p>
+                </div>
+                <div class="rd-milestones">
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2016</div>
+                        <div class="rd-milestone-text"><strong>Multi-PHz electronic metrology</strong> — petahertz-scale signal processing demonstrated. <em>Nature 538, 359</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2018</div>
+                        <div class="rd-milestone-text"><strong>Waveform reproducibility</strong> — ultimate EUV phase stability in quartz HHG. <em>Nature Photonics 12, 291</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">2024</div>
+                        <div class="rd-milestone-text"><strong>Sub-cycle photonics</strong> — perspective on correlated materials. <em>Nature Photonics 18, 407</em></div>
+                    </div>
+                    <div class="rd-milestone">
+                        <div class="rd-milestone-year">Now</div>
+                        <div class="rd-milestone-text"><strong>VO&#8322; phase transition</strong> — resolved lattice-driven mechanism via plasma-edge tracking. <em>Submitted</em></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rd-visual">
+                <div class="rd-visual-img">
+                    <img src="https://www.xplab.physik.uni-rostock.de/storages/uni-rostock/_processed_/d/8/csm_excitonics_716ab99686.png" alt="PHz spectroscopy of phase transitions" loading="lazy">
+                </div>
+                <p class="rd-visual-caption">Single-cycle light transients probing quantum phase transitions in correlated matter.</p>
+                <div class="rd-stat-row">
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">&gt;1 PHz</div>
+                        <div class="rd-stat-label">Probe bandwidth</div>
+                    </div>
+                    <div class="rd-stat">
+                        <div class="rd-stat-val">&lt;1 fs</div>
+                        <div class="rd-stat-label">Temporal structure</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEACHING -->
+    <section class="teaching reveal" id="teaching">
+        <div class="teaching-inner">
+            <div class="teaching-tag">Teaching</div>
+            <h2>Courses &amp; Supervision</h2>
+            <p class="teaching-intro">
+                Teaching at the intersection of ultrafast physics and photonics, with a focus on building
+                intuition for the physical processes that underpin attosecond science. Nine PhD students
+                completed to date.
+            </p>
+            <div class="teaching-grid">
+                <div class="teaching-card">
+                    <div class="teaching-card-level">Advanced &middot; MSc/PhD</div>
+                    <h3>Ultrafast &amp; Attosecond Physics</h3>
+                    <p>Light-matter interaction at the attosecond frontier — from strong-field physics to light-field synthesis and applications in solids and nanostructures.</p>
+                </div>
+                <div class="teaching-card">
+                    <div class="teaching-card-level">Core &middot; BSc/MSc</div>
+                    <h3>Classical Electrodynamics</h3>
+                    <p>Maxwell's equations, electromagnetic wave propagation, radiation, and the interaction of light with matter — with emphasis on physical insight over formalism.</p>
+                </div>
+                <div class="teaching-card">
+                    <div class="teaching-card-level">Core &middot; BSc</div>
+                    <h3>Experimental Physics for Life Sciences</h3>
+                    <p>Mechanics, waves, optics, and modern physics for students in biology, chemistry, and biomedical sciences.</p>
+                </div>
+                <div class="teaching-card">
+                    <div class="teaching-card-level">Advanced &middot; MSc/PhD</div>
+                    <h3>Nonlinear Optics</h3>
+                    <p>Second- and third-order nonlinear processes, ultrashort pulse propagation, parametric amplification, and extreme nonlinear optics in the strong-field regime.</p>
+                </div>
+                <div class="teaching-card">
+                    <div class="teaching-card-level">Seminar &middot; PhD</div>
+                    <h3>Group Seminar &amp; Journal Club</h3>
+                    <p>Weekly research presentations and critical literature discussion — training the next generation of attosecond scientists.</p>
+                </div>
+                <div class="teaching-card">
+                    <div class="teaching-card-level">Supervision</div>
+                    <h3>PhD &amp; Master Theses</h3>
+                    <p>Nine completed PhDs to date. Active supervision of MSc and PhD projects across all four research directions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <span>&copy; 2026 Extreme Photonics Labs &middot; Eleftherios Goulielmakis</span>
+        <div class="footer-links">
+            <a href="https://scholar.google.de/citations?user=z7k9lSAAAAAJ" target="_blank">Google Scholar</a>
+            <a href="https://www.uni-rostock.de" target="_blank">Uni Rostock</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+    // Mobile menu
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Smooth scroll for pillar links
+    document.querySelectorAll('.pillar').forEach(p => {
+        p.addEventListener('click', e => {
+            const href = p.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+    </script>
+
+</body>
+</html>
