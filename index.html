@@ -762,5 +762,76 @@
     })();
     </script>
 
+
+    <!-- Dynamic content loader from _data/homepage.json -->
+    <script>
+    fetch('_data/homepage.json')
+      .then(r => r.json())
+      .then(data => {
+        // Hero
+        const h = data.hero;
+        const heroTitle = document.querySelector('.hero h1');
+        if (heroTitle) heroTitle.innerHTML = '<span class="accent">' + h.title.replace(' Labs','</span> Labs');
+        const heroName = document.querySelector('.hero-name');
+        if (heroName) heroName.textContent = h.name;
+        const heroAff = document.querySelector('.hero-affiliation');
+        if (heroAff) heroAff.textContent = h.affiliation;
+        const heroTag = document.querySelector('.hero-tagline');
+        if (heroTag) heroTag.textContent = h.tagline;
+        const heroPortrait = document.querySelector('.hero-portrait img');
+        if (heroPortrait && h.portrait_url) heroPortrait.src = h.portrait_url;
+
+        // Stats
+        const nums = document.querySelectorAll('.hero-num');
+        h.stats.forEach((s, i) => {
+          if (nums[i]) {
+            const val = nums[i].querySelector('.hero-num-val');
+            const lbl = nums[i].querySelector('.hero-num-label');
+            if (val) val.innerHTML = s.value + (s.unit ? ' <small>' + s.unit + '</small>' : '');
+            if (lbl) lbl.textContent = s.label;
+          }
+        });
+
+        // Research cards
+        const cards = document.querySelectorAll('.glimpse-card');
+        data.research_cards.forEach((rc, i) => {
+          if (cards[i]) {
+            const tag = cards[i].querySelector('.glimpse-card-tag');
+            const ttl = cards[i].querySelector('h3');
+            const desc = cards[i].querySelector('p');
+            if (tag) tag.textContent = rc.tag;
+            if (ttl) ttl.textContent = rc.title;
+            if (desc) desc.textContent = rc.description;
+          }
+        });
+
+        // Highlight
+        const hl = data.highlight;
+        const hlLabel = document.querySelector('.highlight-label');
+        const hlTitle = document.querySelector('.highlight-text h2');
+        const hlText = document.querySelector('.highlight-text p');
+        const hlMetas = document.querySelectorAll('.highlight-meta-item');
+        if (hlLabel) hlLabel.textContent = hl.label;
+        if (hlTitle) hlTitle.textContent = hl.title;
+        if (hlText) hlText.textContent = hl.text;
+        if (hlMetas[0]) hlMetas[0].innerHTML = '<strong>' + hl.meta1.split(' ')[0] + '</strong> ' + hl.meta1.split(' ').slice(1).join(' ');
+        if (hlMetas[1]) hlMetas[1].innerHTML = '<strong>' + hl.meta2.split(' ')[0] + '</strong> ' + hl.meta2.split(' ').slice(1).join(' ');
+        if (hlMetas[2]) hlMetas[2].innerHTML = '<strong>' + hl.meta3.split(' ')[0] + '</strong> ' + hl.meta3.split(' ').slice(1).join(' ');
+
+        // Portals
+        const portalCards = document.querySelectorAll('.portal-card');
+        data.portals.forEach((p, i) => {
+          if (portalCards[i]) {
+            portalCards[i].href = p.link;
+            const ttl = portalCards[i].querySelector('h3');
+            const desc = portalCards[i].querySelector('p');
+            if (ttl) ttl.textContent = p.title;
+            if (desc) desc.textContent = p.description;
+          }
+        });
+      })
+      .catch(e => console.log('Content loaded from HTML (JSON not available):', e));
+    </script>
+
 </body>
 </html>

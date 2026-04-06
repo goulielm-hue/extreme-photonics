@@ -892,5 +892,88 @@
     eras.forEach(era => depthObs.observe(era));
     </script>
 
+
+    <!-- Dynamic content loader from _data/team.json -->
+    <script>
+    fetch('_data/team.json')
+      .then(r => r.json())
+      .then(data => {
+        // Page hero
+        const pageH1 = document.querySelector('.page-hero h1');
+        const pageLead = document.querySelector('.page-hero .lead');
+        if (pageH1) pageH1.textContent = data.page_title;
+        if (pageLead) pageLead.textContent = data.page_intro;
+
+        // Eras - rebuild all era sections
+        const mainContent = document.querySelector('.page-hero').parentElement;
+        const footer = document.querySelector('footer');
+
+        // Remove existing era sections, dividers, alumni-numbers, collab-section
+        document.querySelectorAll('.era, .chapter-divider, .alumni-numbers, .collab-section').forEach(el => el.remove());
+
+        // Build eras
+        data.eras.forEach((era, idx) => {
+          if (idx > 0 && era.divider_text) {
+            const divider = document.createElement('div');
+            divider.className = 'chapter-divider';
+            divider.innerHTML = '<div class="divider-line"></div><p>' + era.divider_text + '</p>';
+            footer.parentElement.insertBefore(divider, footer);
+          }
+
+          const section = document.createElement('section');
+          section.className = 'era reveal';
+          section.dataset.depth = String(idx + 1);
+
+          let membersHTML = '';
+          era.members.forEach(m => {
+            if (m.is_leader) {
+              membersHTML += '<div class="leader-card"><div class="person-avatar">' + m.initials + '</div><div class="leader-info"><div class="person-name">' + m.name + '</div><div class="person-role">' + m.role + '</div><div class="person-note">' + m.note + '</div></div></div>';
+            } else {
+              membersHTML += '<div class="person-card"><div class="person-avatar">' + m.initials + '</div><div class="person-name">' + m.name + '</div><div class="person-role">' + m.role + '</div>';
+              if (m.note) membersHTML += '<div class="person-note">' + m.note + '</div>';
+              if (m.now_at) membersHTML += '<span class="person-where">Now at ' + m.now_at + '</span>';
+              membersHTML += '</div>';
+            }
+          });
+
+          section.innerHTML =
+            '<div class="era-header"><div class="era-line"></div><h2 class="era-label">' + era.name + '</h2><span class="era-years">' + era.years + '</span></div>' +
+            '<p class="era-intro">' + era.intro + '</p>' +
+            '<div class="people-grid">' + membersHTML + '</div>';
+
+          footer.parentElement.insertBefore(section, footer);
+        });
+
+        // Alumni stats
+        if (data.alumni_stats) {
+          const statsDiv = document.createElement('div');
+          statsDiv.className = 'alumni-numbers reveal';
+          data.alumni_stats.forEach(s => {
+            statsDiv.innerHTML += '<div class="alumni-stat"><div class="num">' + s.number + '</div><div class="label">' + s.label + '</div></div>';
+          });
+          footer.parentElement.insertBefore(statsDiv, footer);
+        }
+
+        // Constellation
+        if (data.constellation) {
+          const collab = document.createElement('div');
+          collab.className = 'collab-section reveal';
+          let tagsHTML = '';
+          data.constellation.collaborators.forEach(c => {
+            tagsHTML += '<span class="collab-tag">' + c.name + ' <span class="tag-place">' + c.place + '</span></span>';
+          });
+          collab.innerHTML =
+            '<h2 class="era-label" style="text-align:center;margin-bottom:16px">' + data.constellation.title + '</h2>' +
+            '<p class="era-intro" style="text-align:center;margin:0 auto 32px">' + data.constellation.intro + '</p>' +
+            '<div class="collab-cloud">' + tagsHTML + '</div>';
+          footer.parentElement.insertBefore(collab, footer);
+        }
+
+        // Re-observe new elements for scroll reveal
+        document.querySelectorAll('.reveal:not(.vis)').forEach(el => obs.observe(el));
+      })
+      .catch(e => console.log('Content loaded from HTML (JSON not available):', e));
+    </script>
+
 </body>
 </html>
