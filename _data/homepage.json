@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "title": "Extreme Photonics Labs",
+    "name": "Eleftherios Goulielmakis",
+    "affiliation": "Professor of Physics · Institute of Physics · University of Rostock",
+    "tagline": "We control light with attosecond precision to see electrons move — in atoms, in solids, in real time.",
+    "portrait_url": "https://xplab.physik.uni-rostock.de/wp-content/uploads/2024/12/lefteris_2.jpg",
+    "stats": [
+      {
+        "value": "380",
+        "unit": "as",
+        "label": "Shortest optical pulse"
+      },
+      {
+        "value": "53",
+        "unit": "as",
+        "label": "Shortest electron pulse"
+      },
+      {
+        "value": "<1 Å",
+        "unit": "",
+        "label": "Valence electron imaging"
+      }
+    ]
+  },
+  "research_cards": [
+    {
+      "tag": "Enabling Technology",
+      "title": "Light-Field Synthesis",
+      "description": "Sculpting individual oscillations of light — broadband waveforms synthesized across octaves to create the shortest controlled electromagnetic transients ever made.",
+      "image": "https://xplab.physik.uni-rostock.de/wp-content/uploads/2024/09/LightFieldSynth.png"
+    },
+    {
+      "tag": "ERC Advanced Grant",
+      "title": "Dynamic Picoscopy",
+      "description": "Using synthesized light transients to image valence electron motion in solids and molecules with sub-ångström, attosecond resolution.",
+      "image": "https://xplab.physik.uni-rostock.de/wp-content/uploads/2025/01/Picoscopy2.png"
+    },
+    {
+      "tag": "Nature 2023",
+      "title": "Strong-Field Nanooptics",
+      "description": "Driving extreme nonlinear dynamics at nanometre scales — exploiting field enhancement in nanostructures for petahertz-scale electron control.",
+      "image": "https://xplab.physik.uni-rostock.de/wp-content/uploads/2024/09/NanoOpticsNew.png"
+    },
+    {
+      "tag": "CRC LiMatI",
+      "title": "PHz Spectroscopy",
+      "description": "Petahertz-scale spectroscopy of solids — probing quantum phase transitions and correlated electron dynamics at the natural timescale of valence electrons.",
+      "image": "https://xplab.physik.uni-rostock.de/wp-content/uploads/2024/09/PHzSpectroscopy.png"
+    }
+  ],
+  "highlight": {
+    "label": "Latest",
+    "title": "ERC Advanced Grant awarded for Ultrafast Picoscopy of Solids",
+    "text": "The European Research Council has selected the ULPIS project for an Advanced Grant — extending laser picoscopy to three-dimensional imaging and real-time movies of electron and atomic motion across quantum phase transitions.",
+    "image": "https://xplab.physik.uni-rostock.de/wp-content/uploads/2024/09/ERC_logo.png",
+    "meta1": "2.5 M€ funding",
+    "meta2": "2023–2028 duration",
+    "meta3": "ERC Advanced Grant"
+  },
+  "portals": [
+    {
+      "title": "Scientific Journey",
+      "description": "From Crete to the attosecond frontier — two decades of discovery across four countries.",
+      "link": "journey.html"
+    },
+    {
+      "title": "Publications",
+      "description": "Two decades of attosecond science, strong-field physics, and ultrafast spectroscopy of matter.",
+      "link": "publications.html"
+    },
+    {
+      "title": "The Team",
+      "description": "Physicists from Greece, India, China, and Germany — building the next generation of experiments.",
+      "link": "team.html"
+    },
+    {
+      "title": "Media & Press",
+      "description": "Coverage in Nature, New Scientist, Physics World, The Economist, and media worldwide.",
+      "link": "media.html"
+    },
+    {
+      "title": "Teaching",
+      "description": "Courses in ultrafast physics, electrodynamics, and physics for life sciences.",
+      "link": "#"
+    },
+    {
+      "title": "Join Us / Contact",
+      "description": "PhD, postdoc, and master's positions in attosecond science and extreme photonics.",
+      "link": "contact.html"
+    }
+  ]
+}
